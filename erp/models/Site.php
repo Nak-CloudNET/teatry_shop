@@ -2635,6 +2635,7 @@ class Site extends CI_Model
 		if($old_cost < 0){
 			$old_cost 		= 0; 
 		}
+        $shipping_cost      = 0;
 		/*
 		$total_unit_price 	= $cost * $quantity;
 		$percent_price 		= ($total_unit_price / $total_price);
