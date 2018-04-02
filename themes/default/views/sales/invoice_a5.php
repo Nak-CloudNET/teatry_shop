@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<title>Invoice</title>
 		<meta charset="utf-8">
@@ -56,28 +55,32 @@
 				display:none;
 			}
 			@media print{
-				.bottom-print{display:none;}
-				#buttons{display:none;}
+				.bottom-print{
+					display:none;
+				}
+				#buttons{
+					display:none;
+				}
 			} 
 			.box1 {
 				border: 1px solid #000000;
 				height: 95px;
 				padding: 10px;
-				width: 50%;
+				width: 52%;
 				font-size:11px;
 				line-height : 20px;
 			}
 			.box2{
 				border: 1px solid #000000;
 				height:95px;
-				width:45%;
+				width:42%;
 				padding: 10px;
 				font-size:11px;
 				line-height : 20px;
 			}
 			.box3{
 				height: 95px;
-				width: 5%;
+				width: 6%;
 			}
 			.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
 				border:1px solid #000000;
@@ -248,7 +251,7 @@
 											</div>
 										</td>
 										<td colspan="3">
-											<div class="foot-right" style="width: 322px;">
+											<div class="foot-right" style="width: 300px;">
 												<ul class="list-right">
 													<?php
 														if($inv->shipping !=0)

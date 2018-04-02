@@ -10347,12 +10347,16 @@ class Sales extends MY_Controller
                     $opt->price = 0;
                 }
                 $row->option = $option;
-                $pis = $this->sales_model->getPurchasedItems($row->id, $warehouse_id, $row->option);
+                /*$pis = $this->sales_model->getPurchasedItems($row->id, $warehouse_id, $row->option);
                 if($pis){
                     foreach ($pis as $pi) {
                         $row->quantity += $pi->quantity_balance;
                     }
-                }
+                }*/
+				$qty_stock = $this->sales_model->getWP2($row->id, $warehouse_id);
+				$row->quantity = $qty_stock->quantity;
+				$row->qoh = $qty_stock->quantity;
+				
                 if ($options) {
                     $option_quantity = 0;
                     foreach ($options as $option) {

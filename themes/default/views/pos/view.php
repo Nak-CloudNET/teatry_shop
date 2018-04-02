@@ -128,25 +128,25 @@
                 "<br>" . lang("tel") . ": " . $biller->phone .",&nbsp;&nbsp;".lang('email'). " : " . $biller->email; 
 			?>
 			<div class="text-center">
-				<h6 style="font-family:Khmer OS Muol Light;"> វិក័យប័ត្រ </h6>
-				<h4 style="margin-top: -10px;">Invoice</h4>
+				<h6 style="font-family:Khmer OS Muol Light;"><span style="font-size:10px !important">វិក័យប័ត្រ</span> /  Invoice</h6>
+				<!-- <h4 style="margin-top: -10px;">Invoice</h4> -->
 			</div>
-			<div style="font-size:11px;">
+			<div>
 				<table style="width: 100%;">				
-					<tbody style="font-size: 12px;">						
-						<tr style="text-align:center;">	
+					<tbody>						
+						<tr style="text-align:center;font-size:9px !important;">	
 							<td style="vertical-align:middle;text-align:left;padding:3px;">ក្រុមហ៊ុន</td>
 							<td style="vertical-align:middle;text-align:left;"><?= $inv->company; ?></td>
 							<td style="vertical-align:middle;text-align:right;">ថ្ងៃ&#8203;ខែឆ្នាំ</td>
 							<td style="vertical-align:middle;text-align:right;"><?= $this->erp->hrsd($inv->date); ?></td>	
 						</tr>
-						<tr style="text-align:center;">	
+						<tr style="text-align:center;font-size:9px !important;">	
 							<td style="vertical-align:middle;text-align:left;padding:3px;">អតិថិជន</td>
 							<td style="vertical-align:middle;text-align:left;"><?= $inv->customer_name; ?></td>
 							<td style="vertical-align:middle;text-align:right;">លេខវិក័យបត្រ</td>
 							<td style="vertical-align:middle;text-align:right;"><?= $inv->reference_no; ?></td>							
 						</tr>
-						<tr style="text-align:center;">	
+						<tr style="text-align:center;font-size:9px !important;">	
 							<td style="vertical-align:middle;text-align:left;padding:3px;">ទូរសព្ទ័</td>
 							<td style="vertical-align:middle;text-align:left;"><?= $inv->phone; ?></td>
 							<td style="vertical-align:middle;text-align:right;">អ្នកលក់</td>
@@ -598,7 +598,7 @@
 				}
 				?>
 				<tr>
-					<th style="padding-right: 12px;font-weight:normal" class="text-left">អត្រាប្ដូរប្រាក់<span style="padding-left:40px !important;">$1 = <?= $inv->other_cur_paid_rate. '  ៛'; ?></span></th>
+					<th style="padding-right: 12px;font-weight:normal" class="text-left">អត្រាប្ដូរប្រាក់<span style="padding-left:35px !important;">$1 = <?= $inv->other_cur_paid_rate. '  ៛'; ?></span></th>
 					<th style="font-size:12px" class="text-left"></th>
 				</tr>
 			</table>
