@@ -93,7 +93,21 @@ class Sales_model extends CI_Model
 	public function getReceivableByArray($id)
 	{
 		$this->db
-				->select("sales.id, sales.date, sales.reference_no, sales.po, sales.biller, sales.biller_id, companies.company as customer, companies.phone as phone, sales.sale_status, sales.grand_total, sales.paid, (grand_total-paid) as balance, sales.payment_status")
+			    ->select("
+						sales.id, 
+						sales.date, 
+						sales.reference_no, 
+						sales.po, 
+						sales.biller, 
+						sales.biller_id, 
+						companies.company as customer, 
+						companies.phone as phone, 
+						sales.sale_status, 
+						sales.grand_total, 
+						sales.paid, 
+						(grand_total-paid) as balance, 
+						sales.payment_status
+				")
 				->from('sales')
 				->join('companies', 'sales.customer_id = companies.id', 'left')
 				->where(array('payment_status !=' => 'Returned', 'payment_status !='=>'paid', '(grand_total-paid) <>' => 0));
@@ -107,6 +121,7 @@ class Sales_model extends CI_Model
 		}
         return FALSE;
 	}
+	
 	public function getSaleExportByID($id=null, $wh=null)
     {
 		$this->db
@@ -227,7 +242,7 @@ class Sales_model extends CI_Model
 					$this->db->where("products.category_id NOT IN (".$category.") ");
 				}
 			}
-			$this->db->where("(code LIKE '%" . $term . "%' OR name LIKE '%" . $term . "%')");
+			$this->db->where("(code LIKE '%" . $term . "%' OR name LIKE '%" . $term . "%') AND inactived <> 1");
 			
 			$this->db->limit($limit);
 			$q = $this->db->get('products');
@@ -3797,11 +3812,11 @@ class Sales_model extends CI_Model
 	
 	public function getCombinePaymentBySaleId($id)
     {
-		$this->db->select('id, date, reference_no, biller, customer, sale_status, grand_total, paid, (grand_total-paid) as balance, payment_status');
+		$this->db->select('sales.id, sales.date, sales.reference_no, sales.biller, sales.customer, sales.sale_status, sales.grand_total, sales.paid, (erp_sales.grand_total-erp_sales.paid-COALESCE(erp_return_sales.grand_total,0)) as balance, sales.payment_status');
 		$this->db->from('sales');
-		$this->db->where_in('id', $id);
-		$this->db->where('paid < grand_total');
-		$this->db->where('sale_status !=', 'returned');
+		$this->db->join('return_sales', 'return_sales.id = sales.return_id', 'left');
+		$this->db->where_in('sales.id', $id);
+		$this->db->where('sales.paid < sales.grand_total');
         $q = $this->db->get();
          if ($q->num_rows() > 0) {
             return $q->result();
@@ -3809,6 +3824,32 @@ class Sales_model extends CI_Model
 		return FALSE;
     }
 	
+	public function getCombinePaymentStatement($id)
+    {
+		$this->db->select('
+				sales.id, 
+				sales.date, 
+				sales.reference_no, 
+				sales.saleman_by, 
+				sales.biller_id, 
+				sales.customer_id, 
+				sales.sale_status, 
+				sales.grand_total,
+				SUM(COALESCE(erp_return_sales.grand_total, 0)) as return_grand_total,
+				sales.paid, 
+				(erp_sales.grand_total - erp_sales.paid - SUM(COALESCE(erp_return_sales.grand_total,0))) as balance, 
+				sales.payment_status');
+		$this->db->from('sales');
+		$this->db->join('return_sales', 'return_sales.id = sales.return_id', 'left');
+		$this->db->where_in('sales.id', $id);
+		$this->db->where('sales.paid < sales.grand_total');
+		$this->db->group_by('sales.id');
+        $q = $this->db->get();
+         if ($q->num_rows() > 0) {
+            return $q->result();
+        }
+		return FALSE;
+    }
 	
 	public function getCombinePaymentPurById($id)
     {

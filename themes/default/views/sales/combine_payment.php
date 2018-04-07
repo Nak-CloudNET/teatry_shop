@@ -545,10 +545,10 @@ $(".remove_line").on('click',function() {
 					var paid = (parseFloat($(this).attr('val')) - discount);
 					totalAmount = totalAmount + paid;
 					if(((amount > 0) && ((amount - paid) > 0)) || ((amount > 0) && ((amount - paid) == 0))){
-						$(this).parent().find('.amount_paid_line').val(paid);
+						$(this).parent().find('.amount_paid_line').val(formatDecimal(paid));
 						amount= amount - paid;
 					}else if((amount > 0) && ((amount - paid) < 0)){
-						$(this).parent().find('.amount_paid_line').val(amount);
+						$(this).parent().find('.amount_paid_line').val(formatDecimal(amount));
 						amount = 0; 
 					}else{
 						
