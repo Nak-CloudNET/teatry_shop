@@ -1661,7 +1661,6 @@ class Products extends MY_Controller
                 $photos = NULL;
             }
             $data['quantity'] = isset($wh_total_quantity) ? $wh_total_quantity : 0;
-			//$this->erp->print_arrays($data);
         }
 
         if ($this->form_validation->run() == true && $this->products_model->updateProduct($id, $data, $items, $product_attributes, $photos, $update_variants, $related_products,$items2)) {

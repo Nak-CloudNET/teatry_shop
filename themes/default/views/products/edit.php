@@ -1114,7 +1114,7 @@ foreach ($warehouses_products as $warehouses_product) {
         });
         
     });
-    
+    var total_product_price = $('#prices').val();
     function checkComboPrice(param = null){
         var total_price = 0;
         var total_cost = 0;
@@ -1127,17 +1127,24 @@ foreach ($warehouses_products as $warehouses_product) {
         });
         $(".cb-total").each(function(){
             tpprice +=$(this).val()-0;
+
         });
         if(param) {
             $('#prices').val(formatDecimal(param));
         }
-        if(tpprice){
-            $("#prices").val(tpprice);
+        if(total_product_price > tpprice) {
+            if(tpprice){
+                $("#prices").val(total_product_price);
+            }
+        } else {
+            if(tpprice){
+                $("#prices").val(tpprice);
+            }
         }
-        
         $(".cb_footer_cost").text(formatDecimal(total_cost));
         $("#cost_combo_item").val(formatDecimal(total_cost));
     }
+
 
     <?php if ($product) { ?>
     $(document).ready(function () {
