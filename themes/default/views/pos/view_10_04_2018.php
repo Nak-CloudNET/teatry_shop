@@ -127,25 +127,29 @@
             echo "<p>" . $biller->address . " " . $biller->city . " " . $biller->postal_code . " " . $biller->state . " " . $biller->country .
                 "<br>" . lang("tel") . ": " . $biller->phone .",&nbsp;&nbsp;".lang('email'). " : " . $biller->email; 
 			?>
+			<div class="text-center">
+				<h6 style="font-family:Khmer OS Muol Light;"><span style="font-size:10px !important">វិក័យប័ត្រ</span> /  Invoice</h6>
+				<!-- <h4 style="margin-top: -10px;">Invoice</h4> -->
+			</div>
 			<div>
 				<table style="width: 100%;">				
-					<tbody style=" line-height: 1.5;">
+					<tbody>						
 						<tr style="text-align:center;font-size:9px !important;">	
-							<td style="vertical-align:middle;text-align:left; width:50px; padding">អតិថិជន : </td>
+							<td style="vertical-align:middle;text-align:left;padding:3px;">ក្រុមហ៊ុន</td>
+							<td style="vertical-align:middle;text-align:left;"><?= $inv->company; ?></td>
+							<td style="vertical-align:middle;text-align:right;">ថ្ងៃ&#8203;ខែឆ្នាំ</td>
+							<td style="vertical-align:middle;text-align:right;"><?= $this->erp->hrsd($inv->date); ?></td>	
+						</tr>
+						<tr style="text-align:center;font-size:9px !important;">	
+							<td style="vertical-align:middle;text-align:left;padding:3px;">អតិថិជន</td>
 							<td style="vertical-align:middle;text-align:left;"><?= $inv->customer_name; ?></td>
-							<td style="vertical-align:middle;text-align:right;width:55px;">វិក័យបត្រ :</td>
+							<td style="vertical-align:middle;text-align:right;">លេខវិក័យបត្រ</td>
 							<td style="vertical-align:middle;text-align:right;"><?= $inv->reference_no; ?></td>							
 						</tr>
 						<tr style="text-align:center;font-size:9px !important;">	
-							<td style="vertical-align:middle;text-align:left; width:50px;">ទូរសព្ទ័ : </td>
+							<td style="vertical-align:middle;text-align:left;padding:3px;">ទូរសព្ទ័</td>
 							<td style="vertical-align:middle;text-align:left;"><?= $inv->phone; ?></td>
-							<td style="vertical-align:middle;text-align:right;width:60px;">កាលបរិច្ឆេត :</td>
-							<td style="vertical-align:middle;text-align:right;"><?= $inv->date; ?></td>							
-						</tr>
-						<tr style="text-align:center;font-size:9px !important;">	
-							<td style="vertical-align:middle;text-align:left;">$1 :</td>
-							<td style="vertical-align:middle;text-align:left;"><?= $inv->other_cur_paid_rate. '  ៛'; ?></td>
-							<td style="vertical-align:middle;text-align:right;">អ្នកលក់ :</td>
+							<td style="vertical-align:middle;text-align:right;">អ្នកលក់</td>
 							<td style="vertical-align:middle;text-align:right;"><?= $inv->username; ?></td>							
 						</tr>
 					</tbody>				
@@ -171,10 +175,7 @@
 			}
 			</style>
 			
-			<div class="text-center">
-				<h6 style="margin-top:5px !important;"><b><span style="font-size:10px !important">វិក័យប័ត្រ</span> /  Invoice</b></h6>
-			</div>
-            <table class="table-condensed receipt no_border_btm" style="width:100%; margin-top: -5px;">
+            <table class="table-condensed receipt no_border_btm" style="width:100%;">
 				<thead>
 					<tr style="border:1px dotted black !important;">
 						<th><?= lang("no"); ?></th>
@@ -197,6 +198,8 @@
 					if (is_array($rows)) {
 					foreach ($rows as $row) {
                         $free = lang('free');
+
+						//$this->erp->print_arrays($row);
 						if (isset($tax_summary[$row->tax_code])) {
 							$tax_summary[$row->tax_code]['items'] += $row->quantity;
 							$tax_summary[$row->tax_code]['tax'] += $row->item_tax;
@@ -278,14 +281,38 @@
             </table>
 			<table style="width: 100%; margin-top: 5px;">
 				<tr>
-					<td style="text-align:left;width:30%;"></td>
-					<td style="text-align:right;width:38%;">សរុប</td>
+					<td style="text-align:left;width:25%;">សរុប</td>
+					<td style="text-align:right;width:35%;"></td>
 					<td style="text-align:right;">$ <?=$this->erp->formatMoney($sub_total)?></td>
 				</tr>
 				<tr>
-					<td style="text-align:left;width:30%;"></td>
-					<td style="text-align:right;width:38%;">ដឹកជញ្ចូន</td>
+					<td style="text-align:left;">បញ្ចុះតំលៃ</td>
+					<td style="text-align:right;width:35%;"></td>
+					<td style="text-align:right;">$ <?=$this->erp->formatMoney($inv->order_discount)?></td>
+				</tr>
+				<tr>
+					<td style="text-align:left;">ដឹកជញ្ចូន</td>
+					<td style="text-align:right;width:35%;"></td>
 					<td style="text-align:right;">$ <?=$this->erp->formatMoney($inv->shipping)?></td>
+				</tr>
+				<tr>
+					<td style="text-align:left;">ពន្ធ</td>
+					<td style="text-align:right;width:35%;"></td>
+					<td style="text-align:right;">$ <?=$this->erp->formatMoney($inv->order_tax)?></td>
+				</tr>
+				<tr>
+					<td style="text-align:left;">សរុបចុងក្រោយ</td>
+					<td style="text-align:right;width:40%;font-size:13px;font-weight: bold;">
+						<?php
+							echo '៛'.number_format($inv->grand_total * $inv->other_cur_paid_rate);
+						?>
+					</td>
+					<td style="text-align:right;font-size:13px;font-weight: bold;">$ 
+					<?php
+						echo $this->erp->formatMoney($inv->grand_total);
+					?>
+				
+					</td>
 				</tr>
 			</table>
 			<table class="received" style="width:100%;margin-top: 5px;">
@@ -410,17 +437,15 @@
 						$khr_paid = 0;
 					}	
 				?>
-				    
 					<tr>
-                        <th style="border-top:2px dotted black !important;border-right:none;padding-right: 12px;width:38%;font-weight: normal !important;"  class="text-left">សរុបចុងក្រោយ :</th>
-                        <th style="border-top:2px dotted black !important;border-left:none;font-size:13px;font-weight: bold !important;" class="text-center"><span style="float:left;">$</span><?= $this->erp->formatMoney($inv->grand_total); ?></th>
-                        <th style="border-top:2px dotted black !important;border-left:none;font-size:13px;font-weight: bold !important;" class="text-right"><span style="padding-left:5px;">៛ </span><?= number_format($inv->grand_total * $inv->other_cur_paid_rate); ?></th>
+                        <th style="border-left:2px solid #000;border-top:2px solid #000;border-right:none;padding-right: 12px;width:64%;font-weight: normal !important;"  class="text-left">ប្រាក់ទទួល (<?= $default_currency->code; ?>) :</th>
+                        <th style="border-right:2px solid #000;border-top:2px solid #000;border-left:none;font-size:12px;font-weight: normal !important;" class="text-right">$<?= $this->erp->formatMoney($inv->recieve_usd); ?></th>
                     </tr>
-					<tr>
-                        <th style="border-right:none;padding-right: 12px;width:38%;font-weight: normal !important;"  class="text-left">ប្រាក់ទទួល :</th>
-                        <th style="border-left:none;font-size:13px;font-weight: bold !important;" class="text-center"><span style="float:left;">$</span><?= $this->erp->formatMoney($inv->recieve_usd); ?></th>
-                        <th style="border-left:none;font-size:13px;font-weight: bold !important;" class="text-right">៛ <?= number_format($inv->recieve_real); ?></th>
-                    </tr>				
+                    <tr>
+                        <th style="border-left:2px solid #000;border-bottom:2px solid #000;border-right:none;padding-right: 12px;width:64%;font-weight: normal !important;"  class="text-left">ប្រាក់ទទួល (Riel) :</th>
+                        <th style="border-bottom:2px solid #000;border-right:2px solid #000;border-left:none;font-size:12px;font-weight: normal !important;" class="text-right">៛<?= $this->erp->formatMoney($inv->recieve_real) ; ?></th>
+                    </tr>
+					
 					<?php 
 					}
 					if(count($payments) > 1){
@@ -452,19 +477,26 @@
 				<?php
 						}
 					}else{
-						if((($pos_paid+$amount_kh_to_us) - ($inv->recieve_usd - $grand_totals)) != 0 || ($this->erp->formatMoney((($pos_paid+$amount_kh_to_us) - $grand_totals) * $exchange_rate->rate)) != 0) { ?>
-						<tr>
-							<th style="border-bottom:2px dotted black !important;border-right:none;padding-right: 12px;width:45%;font-weight: normal !important;"  class="text-left">ប្រាក់អាប់ :</th>
-							<th style="border-bottom:2px dotted black !important;border-left:none;font-size:13px;font-weight: bold !important;" class="text-center"><?php
-								echo '<span style="float:left;">$</span>'.$this->erp->formatMoney($payment->pos_balance);
-								$total_us_b = $this->erp->formatMoney(($pos_paid+$amount_kh_to_us) - $inv->grand_total);
-								$m_us = $this->erp->fraction($total_us_b);
-							?></th>
-							<th style="border-bottom:2px dotted black !important;border-left:none;font-size:13px;font-weight: bold !important;" class="text-right"><?= '៛ '.number_format(round($payment->pos_balance * $payment->pos_paid_other_rate)) ; ?></th>
-						</tr>
-					
+					if((($pos_paid+$amount_kh_to_us) - ($inv->recieve_usd - $grand_totals)) != 0 || ($this->erp->formatMoney((($pos_paid+$amount_kh_to_us) - $grand_totals) * $exchange_rate->rate)) != 0) { ?>
+					<tr>
+                        <th style="border-top:2px dotted #000;padding-right: 12px;font-weight:normal" class="text-left">ប្រាក់អាប់  (USD)  </th>
+                        <th style="border-top:2px dotted #000;font-size:12px" class="text-right">
 						<?php
-						}
+							echo '$'.$this->erp->formatMoney($payment->pos_balance);
+							$total_us_b = $this->erp->formatMoney(($pos_paid+$amount_kh_to_us) - $inv->grand_total);
+							$m_us = $this->erp->fraction($total_us_b);
+						?>
+						</th>
+                    </tr>
+                    <tr>
+                        <th style="border-top:2px dotted #000;padding-right: 12px;font-weight:normal" class="text-left">ប្រាក់អាប់  (Riel)</th>
+						<th style="border-top:2px dotted #000;font-size:12px" class="text-right">
+							<?= '៛'.number_format(round($payment->pos_balance * $payment->pos_paid_other_rate)) ; ?>
+						</th>
+                    </tr>
+				
+					<?php
+					}
 					}
 				}
                 if ($pos_paidd < $grand_totals) {
@@ -503,15 +535,19 @@
 					}else{
 				?>
 					<tr>
-                        <th style="border-top:2px dotted black !important;border-right:none;padding-right: 12px;width:45%;font-weight: normal !important;"  class="text-left">សរុបចុងក្រោយ :</th>
-                        <th style="border-top:2px dotted black !important;border-left:none;font-size:13px;font-weight: bold !important;" class="text-center"><span style="float:left;">$</span><?= $this->erp->formatMoney($inv->grand_total); ?></th>
-                        <th style="border-top:2px dotted black !important;border-left:none;font-size:13px;font-weight: bold !important;" class="text-right"><?= '៛ '.number_format($inv->grand_total * $inv->other_cur_paid_rate); ?></th>
+                        <th style="border:2px solid #000;border-right:none;padding-right: 12px;" colspan="<?= $colspan ?>" class="text-right">Received (<?= $default_currency->code; ?>):</th>
+                        <th style="border:2px solid #000;border-left:none;" class="text-right"><?= $this->erp->formatMoney($inv->paid); ?></th>
                     </tr>
-                <!--    <tr>
-                        <th style="padding-right: 15px;width:45%;font-weight: normal !important;"  class="text-left">ប្រាក់ទទួល :</th>
-                        <th style="font-size:12px;font-weight: normal !important;" class="text-left"><span style="float:left;">$</span><?= $this->erp->formatMoney($inv->recieve_usd) ; ?></th>
-                        <th style="font-size:12px;font-weight: normal !important;" class="text-right">៛ <?= $this->erp->formatMoney($inv->recieve_real) ; ?></th>
-                    </tr> -->
+					<?php
+						if($inv->other_cur_paid){
+					?>
+                    <tr>
+                        <th style="border:2px solid #000;border-right:none;padding-right: 12px;" colspan="<?= $colspan ?>" class="text-right">Received (Riel):</th>
+                        <th style="border:2px solid #000;border-left:none;" class="text-right"><?= $inv->other_cur_paid . '  ៛' ; ?></th>
+                    </tr>
+					<?php
+						}else{}
+					?>
 				<?php
 					}
 					if(count($payments) > 1){
@@ -542,19 +578,29 @@
 						}
 					}else{
 					if((($pos_paid+$amount_kh_to_us) - $grand_totals) != 0 || ($this->erp->formatMoney((($pos_paid+$amount_kh_to_us) - $grand_totals)*(($pos_settings->in_out_rate) ? $outexchange_rate->rate:$exchange_rate->rate) )) != 0){ ?>
-					<tr>
-						<th style="border-bottom:2px dotted black !important;border-right:none;padding-right: 13px;width:45%;font-weight: bold !important;"  class="text-left">ប្រាក់ខ្វះ :</th>
-						<th style="border-bottom:2px dotted black !important;border-left:none;font-size:13px;font-weight: bold !important;" class="text-center"><?php
-							echo '<span style="float:left;">$</span>'.$this->erp->formatMoney(abs((($amount_kh_to_us ? 0 : $pos_paid) + $amount_kh_to_us) - $grand_totals));
-							$total_us_b = $this->erp->formatMoney((($amount_kh_to_us ? 0 : $pos_paid)+ $amount_kh_to_us) - $grand_totals);
+                    <tr>
+                        <th style="border-top:2px dotted #000;padding-right: 12px;" colspan="<?= $colspan ?>" class="text-right"><?= lang("remaining_us"); ?></th>
+                        <th style="border-top:2px dotted #000" class="text-right">
+						<?php
+							echo $this->erp->formatMoney(abs(($pos_paid+$amount_kh_to_us) - $grand_totals));
+							$total_us_b = $this->erp->formatMoney(($pos_paid+$amount_kh_to_us) - $grand_totals);
 							$m_us = $this->erp->fraction($total_us_b);
-						?></th>
-						<th style="border-bottom:2px dotted black !important;border-left:none;font-size:12px;font-weight: normal !important;" class="text-right"><?= number_format(abs(((($amount_kh_to_us ? 0 : $pos_paid) + $amount_kh_to_us) - $grand_totals)*(($pos_settings->in_out_rate) ? $outexchange_rate->rate : $exchange_rate->rate))) . ' ៛' ; ?></th>
-					</tr>
+						?>
+						</th>
+                    </tr>
+                    <tr>
+                        <th style="border-top:2px dotted #000;padding-right: 12px;" colspan="<?= $colspan ?>" class="text-right"><?= lang("remaining_kh"); ?></th>
+                        <th style="border-top:2px dotted #000" class="text-right"><?= number_format(abs((($pos_paid+$amount_kh_to_us) - $grand_totals)*(($pos_settings->in_out_rate) ? $outexchange_rate->rate:$exchange_rate->rate))) . ' ៛' ; ?></th>
+                    </tr>
+				
 				<?php }
 					}
 				}
 				?>
+				<tr>
+					<th style="padding-right: 12px;font-weight:normal" class="text-left">អត្រាប្ដូរប្រាក់<span style="padding-left:35px !important;">$1 = <?= $inv->other_cur_paid_rate. '  ៛'; ?></span></th>
+					<th style="font-size:12px" class="text-left"></th>
+				</tr>
 			</table>
             <?php
             if ($Settings->invoice_view == 1) {
