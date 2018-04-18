@@ -5041,7 +5041,7 @@ ORDER BY
         return FALSE;
 	}
 	//Get expense for view expense report
-	public function getCatExpenseReport($reference_no,$from_date,$to_date,$per_page,$ob_set){
+	public function getCatExpenseReport($reference_no,$from_date,$to_date){
 		$this->db->select("gl_trans.narrative,expenses.account_code")
             ->from('expenses')
 			->join('gl_trans', 'gl_trans.account_code = expenses.account_code', 'left');
@@ -5052,7 +5052,6 @@ ORDER BY
 				$this->db->where('date_format(erp_expenses.date,"%Y-%m-%d") >="'.$from_date.'" AND date_format(erp_expenses.date,"%Y-%m-%d") <="'.$to_date.'"');
 			}
             $this->db->group_by('expenses.account_code');
-			$this->db->limit($per_page,$ob_set); 
 		$q = $this->db->get();
 		if($q->num_rows()>0){
 			foreach($q->result() as $row){

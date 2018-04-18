@@ -190,11 +190,11 @@ $(document).ready(function(){
                         </tbody>                       
                     </table>
                 </div>
-				<div class=" text-right">
+			<!--	<div class=" text-right">
 					<div class="dataTables_paginate paging_bootstrap">
 						<?= $pagination; ?>
 					</div>
-				</div>
+				</div> -->
             </div>
         </div>
     </div>

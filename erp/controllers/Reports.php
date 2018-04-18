@@ -23912,7 +23912,7 @@ class Reports extends MY_Controller
 		$config['num_tag_close'] = '</li>';
 		$this->pagination->initialize($config);
 		$this->data["pagination"] = $this->pagination->create_links();
-		$this->data['expense_cat'] = $this->reports_model->getCatExpenseReport($reference_no,$from_date,$to_date,$config['per_page'],$config["ob_set"]);
+		$this->data['expense_cat'] = $this->reports_model->getCatExpenseReport($reference_no,$from_date,$to_date);
 		$this->data['reference_no2']    = $reference_no;
 		$this->data['from_date2']    = $from_date;
 		$this->data['to_date2'] 	  	= $to_date;
