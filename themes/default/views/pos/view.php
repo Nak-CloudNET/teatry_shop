@@ -85,6 +85,7 @@
 				
 				thead tr th {
 					font-size: 10px !important;
+					font-family: Kh Metal Chrieng !important;
 				}
 				
 				tbody {
@@ -131,23 +132,32 @@
 				<table style="width: 100%;">				
 					<tbody style=" line-height: 1.5;">
 						<tr style="text-align:center;font-size:9px !important;">	
-							<td style="vertical-align:middle;text-align:left; width:50px; padding">អតិថិជន : </td>
-							<td style="vertical-align:middle;text-align:left;"><?= $inv->customer_name; ?></td>
-							<td style="vertical-align:middle;text-align:right;width:55px;">វិក័យបត្រ :</td>
+							<td style="vertical-align:middle;text-align:left;width:80px;"><?= $inv->customer_name; ?></td>
+							<td style="vertical-align:middle;text-align:right;width:65px;">វិក័យប័ត្រ :</td>
 							<td style="vertical-align:middle;text-align:right;"><?= $inv->reference_no; ?></td>							
 						</tr>
 						<tr style="text-align:center;font-size:9px !important;">	
-							<td style="vertical-align:middle;text-align:left; width:50px;">ទូរសព្ទ័ : </td>
-							<td style="vertical-align:middle;text-align:left;"><?= $inv->phone; ?></td>
-							<td style="vertical-align:middle;text-align:right;width:60px;">កាលបរិច្ឆេត :</td>
+							<td style="vertical-align:middle;text-align:left;width:80px;"><?= $inv->phone; ?></td>
+							<td style="vertical-align:middle;text-align:right;width:65px;">កាលបរិច្ឆេត :</td>
 							<td style="vertical-align:middle;text-align:right;"><?= $inv->date; ?></td>							
 						</tr>
 						<tr style="text-align:center;font-size:9px !important;">	
-							<td style="vertical-align:middle;text-align:left;">$1 :</td>
-							<td style="vertical-align:middle;text-align:left;"><?= $inv->other_cur_paid_rate. '  ៛'; ?></td>
-							<td style="vertical-align:middle;text-align:right;">អ្នកលក់ :</td>
+							<td style="vertical-align:middle;text-align:left;width:80px;">$1 = <?= $inv->other_cur_paid_rate; ?></td>
+							<td style="vertical-align:middle;text-align:right;width:65px;">អ្នកលក់ :</td>
 							<td style="vertical-align:middle;text-align:right;"><?= $inv->username; ?></td>							
 						</tr>
+					<!--	<tr style="text-align:center;font-size:9px !important;">	
+							<td style="vertical-align:middle;text-align:left;width:45px;">ទូរសព្ទ័ : </td>
+							<td style="vertical-align:middle;text-align:left;"><?= $inv->phone; ?></td>
+							<td style="vertical-align:middle;text-align:right;width:70px;">កាលបរិច្ឆេត :</td>
+							<td style="vertical-align:middle;text-align:right;"><?= $inv->date; ?></td>							
+						</tr>
+						<tr style="text-align:center;font-size:9px !important;">	
+							<td style="vertical-align:middle;text-align:left;width:45px;">$1 :</td>
+							<td style="vertical-align:middle;text-align:left;"><?= $inv->other_cur_paid_rate; ?></td>
+							<td style="vertical-align:middle;text-align:right;">អ្នកលក់ :</td>
+							<td style="vertical-align:middle;text-align:right;"><?= $inv->username; ?></td>							
+						</tr> -->
 					</tbody>				
 				</table>
 			</div>
