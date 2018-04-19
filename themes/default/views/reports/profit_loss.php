@@ -148,7 +148,6 @@
                             <div class="small-box padding1010 borange">
                                 <h4 class="bold">
 								<?php
-									
 									echo anchor("reports/view_profit_payment_sent/$start_date/$end_date",lang('payments_sent'),'data-toggle="modal" data-target="#myModal"');
 								?>
 								</h4>

@@ -10080,7 +10080,7 @@ class Reports extends MY_Controller
 		}
 		$this->data['billers'] = $this->site->getAllCompanies('biller');
         $this->data['error'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('error');
-
+		
         $this->data['total_purchases'] = $this->reports_model->getTotalPurchases($start, $end, $biller_id);
         $this->data['total_sales'] = $this->reports_model->getTotalSales($start, $end, $biller_id);
         $this->data['total_expenses'] = $this->reports_model->getTotalExpenses($start, $end, $biller_id);
