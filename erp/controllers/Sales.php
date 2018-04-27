@@ -1097,10 +1097,12 @@ AND "2018-03-31 23:59:00"';
 	function print_statement_header($id = NULL, $sale = NULL)
     {
 		$inv = $this->sales_model->getCombinePaymentStatement($id);
+		$inv_return = $this->sales_model->getReturnSaleStatement($id);
         $this->data['customer'] = $this->site->getCompanyByID($sale->customer_id);
         $this->data['biller'] = $this->site->getCompanyByID($sale->biller_id);
         $this->data['saleman_by'] = $this->site->getUser($sale->saleman_by);
         $this->data['invs'] = $inv;       
+        $this->data['inv_returns'] = $inv_return;       
         $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => site_url('sales'), 'page' => lang('sales')), array('link' => '#', 'page' => lang('view')));
         $meta = array('page_title' => lang('view_sales_details'), 'bc' => $bc);
 		$this->load->view($this->theme . 'sales/print_statement_header', $this->data);
@@ -1109,10 +1111,12 @@ AND "2018-03-31 23:59:00"';
 	function print_statement_no_header($id = NULL, $sale = NULL)
     {
 		$inv = $this->sales_model->getCombinePaymentStatement($id);
+		$inv_return = $this->sales_model->getReturnSaleStatement($id);
         $this->data['customer'] = $this->site->getCompanyByID($sale->customer_id);
         $this->data['biller'] = $this->site->getCompanyByID($sale->biller_id);
         $this->data['saleman_by'] = $this->site->getUser($sale->saleman_by);
-        $this->data['invs'] = $inv;       
+        $this->data['invs'] = $inv;
+		$this->data['inv_returns'] = $inv_return;
         $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => site_url('sales'), 'page' => lang('sales')), array('link' => '#', 'page' => lang('view')));
         $meta = array('page_title' => lang('view_sales_details'), 'bc' => $bc);
 		$this->load->view($this->theme . 'sales/print_statement_no_header', $this->data);

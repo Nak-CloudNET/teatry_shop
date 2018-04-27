@@ -98,23 +98,23 @@
 					<div class="box1">
 						<table style="font-size: 13px;line-height:22px !important;">
 							<tr>
-								<td style="width: 30%;">ជំរាប ជូន </td>
-								<td style="width: 5%;">:</td>
+								<td style="width: 10%;">ជំរាប ជូន </td>
+								<td style="width: 3%;">:</td>
 								<td style="width: 50%;"><?= $customer->company; ?></td>
 							</tr>
 							<tr>
-								<td style="width: 30%;">ឈ្មោះអតិថិជន</td>
-								<td style="width: 5%;">:</td>
+								<td style="width: 10%;">ឈ្មោះអតិថិជន</td>
+								<td style="width: 3%;">:</td>
 								<td style="width: 50%;"><?= $customer->name; ?></td>
 							</tr>
 							<tr>
-								<td style="width: 30%;">ទូរស័ព្ទ</td>
-								<td style="width: 5%;">:</td>
+								<td style="width: 10%;">ទូរស័ព្ទ</td>
+								<td style="width: 3%;">:</td>
 								<td style="width: 50%;"><?= $customer->phone; ?></td>
 							</tr>
 							<tr>
-								<td style="width: 30%;">អាស័យដ្ឋាន</td>
-								<td style="width: 5%;">:</td>
+								<td style="width: 10%;">អាស័យដ្ឋាន</td>
+								<td style="width: 3%;">:</td>
 								<td style="width: 50%;"><?= $customer->address; ?></td>
 							</tr>
 						</table>
@@ -154,26 +154,43 @@
 							<?php 
 								$r = 1;
 								$i = 1;
-								$total_grand_total = 0;
 								$total_balance = 0;
 								foreach($invs as $inv){
-							?>
-								<tr class="height_tbody">
-									<td style="vertical-align: middle; text-align: center; height: 10px !important;"><?= $r; ?></td>
-									<td style="vertical-align: middle; text-align: center; height: 10px !important;"><?= date('d-m-Y', strtotime($inv->date)); ?></td>
-									<td style="vertical-align: middle; text-align: center; height: 10px !important;"><?= $inv->reference_no; ?></td>
-									<td style="vertical-align: middle; text-align: center !important; height: 10px !important;"><?= $inv->po; ?></td>
-									<td style="vertical-align: middle; text-align: right !important; height: 10px !important;padding-right:5px !important;"><?= $this->erp->formatMoney($inv->balance); ?></td>
-									<td style="vertical-align: middle; text-align: center;height: 10px !important;"></td>
-								</tr>
-							<?php 
-								$total_grand_total += $inv->grand_total;
-								$total_balance += $inv->balance;
-								$r++;
-								$i++;
-							} 
-							?>
-							
+								?>
+									<tr class="height_tbody">
+										<td style="vertical-align: middle; text-align: center; height: 10px !important;"><?= $r; ?></td>
+										<td style="vertical-align: middle; text-align: center; height: 10px !important;"><?= date('d-m-Y', strtotime($inv->date)); ?></td>
+										<td style="vertical-align: middle; text-align: center; height: 10px !important;"><?= $inv->reference_no; ?></td>
+										<td style="vertical-align: middle; text-align: center !important; height: 10px !important;"><?= $inv->po; ?></td>
+										<td style="vertical-align: middle; text-align: right !important; height: 10px !important;padding-right:5px !important;"><?= $this->erp->formatMoney($inv->balance); ?></td>
+										<td style="vertical-align: middle; text-align: center;height: 10px !important;"></td>
+									</tr>
+								<?php 
+									$total_balance += $inv->balance;
+									$r++;
+									$i++;
+								} 
+								?>
+								
+								<?php if($inv_returns > 0) { 
+									foreach($inv_returns as $inv_return){
+								?>
+									<tr class="height_tbody">
+										<td style="vertical-align: middle; text-align: center; height: 10px !important;"><?= $r; ?></td>
+										<td style="vertical-align: middle; text-align: center; height: 10px !important;"><?= date('d-m-Y', strtotime($inv_return->date)); ?></td>
+										<td style="vertical-align: middle; text-align: center; height: 10px !important;"><?= $inv_return->reference_no; ?></td>
+										<td style="vertical-align: middle; text-align: center !important; height: 10px !important;"></td>
+										<td style="vertical-align: middle; text-align: right !important; height: 10px !important;padding-right:5px !important;"><?= $this->erp->formatMoney($inv_return->returned_grand_total  * (-1)); ?></td>
+										<td style="vertical-align: middle; text-align: center;height: 10px !important;"></td>
+									</tr>								
+								<?php
+									$total_balance -= $inv_return->returned_grand_total;
+									$r++;
+									$i++;
+									}
+								}
+								?>
+								
 							<?php 
 								if($i <= 7){
 								$n = 7 - $i;

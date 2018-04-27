@@ -1572,8 +1572,6 @@ class Sales_model extends CI_Model
 						');
         $q = $this->db->get_where('sales', array('sales.id' => $id));
         if ($q->num_rows() > 0) {
-            
-			//$this->erp->print_arrays($data);
            return $q->row();
         }
 		return FALSE;
@@ -1581,8 +1579,7 @@ class Sales_model extends CI_Model
 	
     public function getReturnByID($id=null)
     {
-		
-        $q = $this->db->get_where('return_sales', array('id' => $id), 1);
+		$q = $this->db->get_where('return_sales', array('id' => $id), 1);
         if ($q->num_rows() > 0) {
             return $q->row();
         }
@@ -3835,12 +3832,10 @@ class Sales_model extends CI_Model
 				sales.customer_id, 
 				sales.sale_status, 
 				sales.grand_total,
-				SUM(COALESCE(erp_return_sales.grand_total, 0)) as return_grand_total,
 				sales.paid, 
-				(erp_sales.grand_total - erp_sales.paid - SUM(COALESCE(erp_return_sales.grand_total,0))) as balance, 
+				(erp_sales.grand_total - erp_sales.paid) as balance, 
 				sales.payment_status');
 		$this->db->from('sales');
-		$this->db->join('return_sales', 'return_sales.id = sales.return_id', 'left');
 		$this->db->where_in('sales.id', $id);
 		$this->db->where('sales.paid < sales.grand_total');
 		$this->db->group_by('sales.id');
@@ -3850,6 +3845,17 @@ class Sales_model extends CI_Model
         }
 		return FALSE;
     }
+	
+	public function getReturnSaleStatement($sale_id = NULL) {
+		$this->db->select("reference_no, date, SUM(COALESCE(grand_total, 0)) as returned_grand_total");
+		$this->db->where_in('sale_id', $sale_id);
+		$this->db->group_by('id');
+		$q = $this->db->get('return_sales');
+		if ($q->num_rows() > 0) {  
+            return $q->result();
+        }
+		return false;
+	}
 	
 	public function getCombinePaymentPurById($id)
     {
@@ -6506,10 +6512,6 @@ class Sales_model extends CI_Model
         }
         return FALSE;
     }
-	
-	public function getReturnDataByReturnID($return_id){
-		
-	}
 	
 	function getLastQueue($date, $biller_id){
 		$this->db->select("DATE_FORMAT(date,'%d') as date, biller_id, queue")

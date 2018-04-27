@@ -470,7 +470,6 @@
 											$total_cost = $this->erp->formatMoney($sale_detail_returned->unit_cost) * $sale_detail_returned->quantity;											
 											$gross_margin = ($sale_detail_returned->subtotal - $sale_detail_returned->item_tax) - $total_cost;
 											$sub_total = ($total_amount - $sale->order_discount) + $sale->order_tax + $total_item_tax + $sale->shipping;
-											
 											$total_discount += $sale_detail_returned->item_discount;
 											$total_quantity += $sale_detail_returned->quantity;
 											$total_costs += $total_cost;
