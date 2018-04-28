@@ -21498,8 +21498,8 @@ class Reports extends MY_Controller
 	
 	function customer_details()
     {
-       //$this->erp->checkPermissions('inventory_valuation_detail', NULL, 'product_report');
-        $datt =$this->reports_model->getLastDate("erp_sales","date");
+       
+		$datt =$this->reports_model->getLastDate("erp_sales","date");
         if ($this->input->post('customer')) {
             $customer =  $this->input->post('customer');
         }else{

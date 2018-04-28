@@ -1085,11 +1085,11 @@
                                                     <i class="fa fa-users"></i><span class="text"> <?= lang('list_billers'); ?></span>
                                                 </a>
                                             </li>
-                                            <li id="billers_index">
+                                        <!--    <li id="billers_index">
                                                 <a class="submenu" href="<?= site_url('billers/add'); ?>" data-toggle="modal" data-target="#myModal">
                                                     <i class="fa fa-plus-circle"></i><span class="text"> <?= lang('add_biller'); ?></span>
                                                 </a>
-                                            </li>
+                                            </li> -->
                                         <?php } ?>
                                                 <li id="customers_index">
                                                     <a class="submenu" href="<?= site_url('customers'); ?>">
@@ -1121,7 +1121,7 @@
                                                         <i class="fa fa-plus-circle"></i><span class="text"> <?= lang('add_supplier'); ?></span>
                                                     </a>
                                                 </li>
-                                               <li id="employees_index">
+                                            <!--   <li id="employees_index">
 													<a class="submenu" href="<?= site_url('employees'); ?>">
 														<i class="fa fa-users"></i><span class="text"> <?= lang('list_employees'); ?></span>
 													</a>
@@ -1135,7 +1135,7 @@
 													<a class="submenu" href="<?= site_url('employees/create_employee_salary'); ?>" >
 														<i class="fa fa-plus-circle"></i><span class="text"> <?= lang('create_employee_salary'); ?></span>
 													</a>
-												</li>
+												</li> -->
                                     </ul>
                                 </li>
                                 <!--

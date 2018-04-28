@@ -116,7 +116,7 @@
                                 <label class="control-label" for="warehouse"><?= lang("customer"); ?></label>
                                 <?php
 								$cu = array(""=>"ALL");
-								$cupp = $this->db->select("customer_id,customer")->group_by("customer_id")->get("erp_sales")->result();
+								$cupp = $this->db->select("erp_sales.customer_id, CONCAT( erp_sales.customer, ' (', erp_companies.company ,')' ) as customer")->join('erp_companies', 'erp_companies.id = erp_sales.customer_id', 'LEFT')->group_by("customer_id")->get("erp_sales")->result();
                                 foreach ($cupp as $cup) {
                                     $cu[$cup->customer_id] = $cup->customer;
                                 }
@@ -169,8 +169,9 @@
 							$grand = 0 ;
 							$gqty = 0;
 							$wid = $this->reports_model->getWareByUserID();
-							$this->db->select("customer_id,customer,SUM(erp_sale_items.quantity) as qty")
-							->join("erp_sale_items","erp_sale_items.sale_id=erp_sales.id","LEFT");
+							$this->db->select("erp_sales.customer_id, CONCAT(erp_sales.customer,' (', erp_companies.company ,')') as customer, SUM(erp_sale_items.quantity) as qty")
+							->join("erp_sale_items","erp_sale_items.sale_id = erp_sales.id", "LEFT")
+							->join("erp_companies","erp_companies.id = erp_sales.customer_id", "LEFT");
 							if($customer){
 								$this->db->where("erp_sales.customer_id",$customer);
 							}
@@ -202,7 +203,7 @@
 									if($row->qty){
 								?>
 							<tr>
-								<td colspan="9" style="background:#F0F8FF;"><b><?=$row->customer?></b></td>
+								<td colspan="9" style="background:#F0F8FF;"><b><?= $row->customer ?></b></td>
 							</tr>
 								<?php
 									 $this->db->select("product_id,product_name,erp_sale_items.quantity,net_unit_price,customer_id,reference_no,erp_sales.date,'SALE' as transaction_type,unit,option_id ")->join("erp_sales","erp_sales.id = erp_sale_items.sale_id","LEFT")->join("erp_products","erp_products.id = erp_sale_items.product_id","LEFT");

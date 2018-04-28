@@ -132,8 +132,8 @@
             {column_number: 3, filter_default_label: "[<?=lang('so_no');?>]", filter_type: "text", data: []},
             {column_number: 4, filter_default_label: "[<?=lang('sale_no');?>]", filter_type: "text", data: []},
             {column_number: 5, filter_default_label: "[<?=lang('po');?>]", filter_type: "text", data: []},
-            {column_number: 6, filter_default_label: "[<?=lang('biller');?>]", filter_type: "text", data: []},
-			{column_number: 7, filter_default_label: "[<?=lang('customer');?>]", filter_type: "text", data: []},
+            {column_number: 6, filter_default_label: "[<?=lang('customer');?>]", filter_type: "text", data: []},
+			{column_number: 7, filter_default_label: "[<?=lang('company');?>]", filter_type: "text", data: []},
 			{column_number: 8, filter_default_label: "[<?=lang('saleman');?>]", filter_type: "text", data: []},
             {column_number: 9, filter_default_label: "[<?=lang('sale_status');?>]", filter_type: "text", data: []},
             {column_number: 16, filter_default_label: "[<?=lang('payment_status');?>]", filter_type: "text", data: []},
@@ -692,8 +692,8 @@
                             <th><?php echo $this->lang->line("so_no"); ?></th>
                             <th><?php echo $this->lang->line("sale_ref"); ?></th>
 							<th><?php echo $this->lang->line("po"); ?></th>
-                            <th><?php echo $this->lang->line("biller"); ?></th>
                             <th><?php echo $this->lang->line("customer"); ?></th>
+                            <th><?php echo $this->lang->line("company"); ?></th>
 							<th><?php echo $this->lang->line("saleman"); ?></th>
                             <th><?php echo $this->lang->line("sale_status"); ?></th>
                             <th><?php echo $this->lang->line("amount"); ?></th>
