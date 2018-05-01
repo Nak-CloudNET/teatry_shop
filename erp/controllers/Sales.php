@@ -419,7 +419,7 @@ class Sales extends MY_Controller
         if ($warehouse_id) {
             $this->datatables
 				->select("sales.id, sales.date as date,erp_quotes.reference_no as q_no, sale_order.reference_no as so_no, 
-							sales.reference_no as sale_no, sales.po, sales.biller, sales.customer, 
+							sales.reference_no as sale_no, sales.po, companies.name, companies.company, 
 							users.username AS saleman, sales.sale_status, COALESCE(erp_sales.grand_total,0) as amount,
 							COALESCE((SELECT SUM(erp_return_sales.grand_total) FROM erp_return_sales WHERE erp_return_sales.sale_id = erp_sales.id), 0) as return_sale,
 							COALESCE( (SELECT SUM(IF((erp_payments.paid_by != 'deposit' AND ISNULL(erp_payments.return_id)), erp_payments.amount, IF(NOT ISNULL(erp_payments.return_id), ((-1)*erp_payments.amount), 0))) FROM erp_payments WHERE erp_payments.sale_id = erp_sales.id),0) as paid, 
@@ -461,7 +461,7 @@ class Sales extends MY_Controller
         } else {
 			$this->datatables
 				->select("sales.id, sales.date as date,erp_quotes.reference_no as q_no, sale_order.reference_no as so_no, 
-							sales.reference_no as sale_no, sales.po, sales.customer, companies.company, 
+							sales.reference_no as sale_no, sales.po, companies.name, companies.company, 
 							users.username AS saleman, sales.sale_status, COALESCE(erp_sales.grand_total,0) as amount,
 							COALESCE((SELECT SUM(erp_return_sales.grand_total) FROM erp_return_sales WHERE erp_return_sales.sale_id = erp_sales.id), 0) as return_sale,
 							COALESCE( (SELECT SUM(IF((erp_payments.paid_by != 'deposit' AND ISNULL(erp_payments.return_id)), erp_payments.amount, IF(NOT ISNULL(erp_payments.return_id), ((-1)*erp_payments.amount), 0))) FROM erp_payments WHERE erp_payments.sale_id = erp_sales.id),0) as paid, 
