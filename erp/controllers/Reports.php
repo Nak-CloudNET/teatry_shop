@@ -404,13 +404,13 @@ class Reports extends MY_Controller
                    ->group_by('products.id');
             } else {
                 $this->datatables
-                    ->select('erp_products.id, image, code, name, warehouses_products.quantity, alert_quantity')
-					->join("warehouses_products", 'products.id=warehouses_products.product_id', 'left')
+                    ->select('erp_products.id, erp_products.image, erp_products.code, erp_products.name, warehouses_products.quantity, erp_products.alert_quantity')
+					->join("warehouses_products", 'products.id = warehouses_products.product_id', 'left')
                     ->from('products')
-                    ->where('alert_quantity > warehouses_products.quantity')
-                    ->where('track_quantity', 1);
+                    ->where('erp_products.alert_quantity > erp_warehouses_products.quantity')
+                    ->where(array('erp_products.track_quantity' => 1, 'erp_products.inactived' => 0));
 				if($wid){
-					$this->datatables->where("warehouses_products.warehouse_id IN ($wid)");
+					$this->datatables->where("erp_warehouses_products.warehouse_id IN ($wid)");
 				}				
 				
             }

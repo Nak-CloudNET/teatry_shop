@@ -9,7 +9,7 @@ class Site extends CI_Model
 
     public function get_total_qty_alerts() 
 	{
-        $this->db->where('quantity <= alert_quantity', NULL, FALSE)->where('track_quantity', 1);
+        $this->db->where('COALESCE(erp_products.quantity, 0) < COALESCE(erp_products.alert_quantity, 0)', NULL, FALSE)->where(array('track_quantity' => 1, 'inactived' => 0));
         return $this->db->count_all_results('products');
     }
 	

@@ -259,7 +259,7 @@
 									</a>
 								</li>
 							<?php }
-							// $this->erp->print_arrays($payment_customer_alert_num->id);
+							
 							if (!empty($payment_customer_alert_num)) { ?>
 								<li>
 									<a href="<?= site_url('sales/?alert_id='. $payment_customer_alert_num->id) ?>" class="">
