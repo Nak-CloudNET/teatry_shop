@@ -187,14 +187,14 @@
             <table class="table-condensed receipt no_border_btm" style="width:100%; margin-top: -5px;">
 				<thead>
 					<tr style="border:1px dotted black !important;">
-						<th><?= lang("no"); ?></th>
-						<th><?= lang("description"); ?></th>
-						<th style="text-align:center;"><?= lang("qty"); ?></th>
-						<th style="text-align:right;"><?= lang("Price"); ?></th>
+						<th style="width:10px !important;"><?= lang("no"); ?></th>
+						<th style="width:90px !important;"><?= lang("description"); ?></th>
+						<th style="text-align:center; width:40px !important;"><?= lang("qty"); ?></th>
+						<th style="text-align:center; width:250px !important;"><?= lang("price"); ?></th>
 						<?php if ($inv->order_discount != 0 || $total_disc != '') {
 							echo '<th>'.lang('discount').'</th>';
 						} ?>
-						<th style="padding-left:10px;padding-right:10px;text-align:right;"><?= lang("amount"); ?> </th>
+						<th style="width:85px !important;text-align:right;"><?= lang("amount"); ?> </th>
 					</tr>
 				</thead>
                 <tbody style="border-bottom:2px solid black;">
@@ -226,7 +226,7 @@
 						//echo '	<td style="text-align:left;">' . $row->serial_no . '</td>';
 						echo '	<td class="text-center">' . $this->erp->formatQuantity($row->quantity) . '</td>';
 						
-						echo '	<td class="text-center"  style="text-align:right; width:65px !important">$ ' . $this->erp->formatMoney($row->unit_price) . '</td>';
+						echo '	<td class="text-center"  style="text-align:center; max-width:85px !important;">$ ' . $this->erp->formatMoney($row->unit_price) . '</td>';
 					
 						$colspan = 5;
 						if ($inv->order_discount != 0 || $row->item_discount != 0) {
