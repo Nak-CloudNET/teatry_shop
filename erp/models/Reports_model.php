@@ -1356,6 +1356,20 @@ ORDER BY
         }
         return FALSE;
     }
+	
+	public function getTotalSaleReturnedAmount($start, $end, $biller_id = NULL)
+    {
+        $this->db->select('SUM(COALESCE(grand_total, 0)) as total_amount', FALSE)
+            ->where('date BETWEEN ' . $start . ' and ' . $end);
+			if($biller_id != NULL){
+				$this->db->where('biller_id', $biller_id);
+			}
+        $q = $this->db->get('return_sales');
+        if ($q->num_rows() > 0) {
+            return $q->row();
+        }
+        return FALSE;
+    }
 
     public function getWarehouseTotals($warehouse_id = NULL)
     {

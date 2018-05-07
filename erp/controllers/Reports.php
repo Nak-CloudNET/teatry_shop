@@ -10092,6 +10092,7 @@ class Reports extends MY_Controller
         $this->data['total_received_ppp'] = $this->reports_model->getTotalReceivedPPPAmount($start, $end, $biller_id);
         $this->data['total_received_stripe'] = $this->reports_model->getTotalReceivedStripeAmount($start, $end, $biller_id);
         $this->data['total_returned'] = $this->reports_model->getTotalReturnedAmount($start, $end, $biller_id);
+        $this->data['total_sale_returned'] = $this->reports_model->getTotalSaleReturnedAmount($start, $end, $biller_id);
 		$this->data['total_costs'] = $this->reports_model->getTotalCosts($start, $end);
         $this->data['start'] = urldecode($start_date);
         $this->data['end'] = urldecode($end_date);

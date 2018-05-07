@@ -212,7 +212,7 @@
                                     - <?= $this->erp->formatMoney($total_purchases->total_amount) . ' ' . lang('purchases') ?></p>
                             </div>
                         </div>
-                        <div class="col-sm-6">
+                    <!--    <div class="col-sm-6">
                             <div class="small-box padding1010 bpink">
                                 <h4 class="bold"><?= lang('profit_loss') ?></h4>
                                 <i class="fa fa-money"></i>
@@ -223,26 +223,8 @@
                                     - <?= $this->erp->formatMoney($total_sales->tax) . ' ' . lang('tax') ?>
                                     - <?= $this->erp->formatMoney($total_purchases->total_amount) . ' ' . lang('purchases') ?> </p>
                             </div>
-                        </div>
-                        
-                    </div>
-                </div>
-				<div class="row">
-                    <div class="col-sm-12">
-                        
-                        <div class="col-sm-6">
-                            <div class="small-box padding1010 bblue">
-                                <h4 class="bold"><?= lang('net_profit_loss') ?></h4>
-                                <i class="fa fa-money"></i>
-
-                                <h3 class="bold"><?= $this->erp->formatMoney(($total_sales->total_amount - $total_sales->tax) - ($total_purchases->total_amount - $total_purchases->tax)) ?></h3>
-
-                                <p>(<?= $this->erp->formatMoney($total_sales->total_amount) . ' ' . lang('sales') ?>
-                                    - <?= $this->erp->formatMoney($total_sales->tax) . ' ' . lang('tax') ?>) -
-                                    (<?= $this->erp->formatMoney($total_purchases->total_amount) . ' ' . lang('purchases') ?>
-                                    - <?= $this->erp->formatMoney($total_purchases->tax) . ' ' . lang('tax') ?>)</p>
-                            </div>
-                        </div>
+                        </div> -->
+						
 						<div class="col-sm-6">
                             <div class="small-box padding1010 bpurple">
                                 <h4 class="bold"><?= lang('net_profit_loss') ?></h4>
@@ -254,6 +236,50 @@
                                     - <?= $this->erp->formatMoney($total_sales->tax) . ' ' . lang('tax') ?>) -
                                     (<?= $this->erp->formatMoney($total_costs->cost) . ' ' . lang('costs') ?>
                                     )</p>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+				<div class="row">
+                    <div class="col-sm-12">
+                        
+                    <!--    <div class="col-sm-6">
+                            <div class="small-box padding1010 bblue">
+                                <h4 class="bold"><?= lang('net_profit_loss') ?></h4>
+                                <i class="fa fa-money"></i>
+
+                                <h3 class="bold"><?= $this->erp->formatMoney(($total_sales->total_amount - $total_sales->tax) - ($total_purchases->total_amount - $total_purchases->tax)) ?></h3>
+
+                                <p>(<?= $this->erp->formatMoney($total_sales->total_amount) . ' ' . lang('sales') ?>
+                                    - <?= $this->erp->formatMoney($total_sales->tax) . ' ' . lang('tax') ?>) -
+                                    (<?= $this->erp->formatMoney($total_purchases->total_amount) . ' ' . lang('purchases') ?>
+                                    - <?= $this->erp->formatMoney($total_purchases->tax) . ' ' . lang('tax') ?>)</p>
+                            </div>
+                        </div> 
+						<div class="col-sm-6">
+                            <div class="small-box padding1010 bpurple">
+                                <h4 class="bold"><?= lang('net_profit_loss') ?></h4>
+                                <i class="fa fa-usd"></i>
+
+                                <h3 class="bold"><?= $this->erp->formatMoney(($total_sales->total_amount - $total_sales->tax) - ($total_costs->cost)) ?></h3>
+
+                                <p>(<?= $this->erp->formatMoney($total_sales->total_amount) . ' ' . lang('sales') ?>
+                                    - <?= $this->erp->formatMoney($total_sales->tax) . ' ' . lang('tax') ?>) -
+                                    (<?= $this->erp->formatMoney($total_costs->cost) . ' ' . lang('costs') ?>
+                                    )</p>
+                            </div>
+                        </div> -->
+						<div class="col-sm-12">
+                            <div class="small-box padding1010 bmGreen">
+                                <h4 class="bold"><?= lang('net_profit_loss') ?></h4>
+                                <i class="fa fa-pie-chart"></i>
+
+                                <h3 class="bold"><?= $this->erp->formatMoney($total_sales->total_amount - $total_sale_returned->total_amount - $total_expenses->total_amount) ?></h3>
+
+                                <p class="bold"><?= $this->erp->formatMoney($total_sales->total_amount) . ' ' . lang('total_sales') ?>
+                                    - <?= $this->erp->formatMoney($total_sale_returned->total_amount) . ' ' . lang('total_returned') ?>
+                                    - <?= $this->erp->formatMoney($total_expenses->total_amount) . ' ' . lang('total_expenses') ?></p>
                             </div>
                         </div>
                     </div>

@@ -948,4 +948,6 @@ $lang['payment_received']                   = "Payment Received";
 $lang['expanses']                   		= "Expanses";
 $lang['net_profit_loss']                   	= "Net Profit Loss";
 $lang['deposited']                         	= "Deposited";
+$lang['total_expenses']                     = "Total Expenses";
+$lang['total_returned']                     = "Total Returned";
 $lang['amount_in_word']                     = "Amount In Word";
