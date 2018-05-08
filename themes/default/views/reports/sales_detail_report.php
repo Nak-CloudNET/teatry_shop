@@ -309,7 +309,13 @@
                                          erp_sale_items.item_tax,
                                          erp_sale_items.option_id,
 										 erp_product_variants.qty_unit,
-										 (CASE WHEN erp_products.unit = 0 THEN erp_products.unit ELSE erp_product_variants.name END) as unit
+										 (
+											CASE WHEN erp_sale_items.option_id > 0 THEN 
+												erp_product_variants.name 
+											ELSE 
+												erp_units.name 
+											END
+										) as unit
 									FROM ";
 										
 								$sales_detail = $this->db->query("{$sql}{$table_sale_items} AS erp_sale_items
@@ -376,7 +382,7 @@
 										
 									if($sale->type == 1){
 										foreach($sales_detail as $sale_detail){										
-											$unit = isset($sale_detail->variant) ? $sale_detail->variant : $sale_detail->unit;
+											$unit = $sale_detail->variant ? $sale_detail->variant : $sale_detail->unit;
 
                                             if ($sale_detail->option_id > 0) {
                                                 $total_cost = $sale_detail->unit_cost * $sale_detail->quantity;

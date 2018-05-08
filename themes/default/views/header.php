@@ -714,13 +714,13 @@
 												</a>
 											</li>
 										<?php } ?>
-                                        <li id="purchases_return_purchases">
+                                    <!--    <li id="purchases_return_purchases">
                                             <a class="submenu" href="<?= site_url('purchases/return_purchases'); ?>">
                                                 <i class="fa fa-reply"></i>
                                                 <span class="text"> <?= lang('list_purchases_return'); ?></span>
                                             </a>
                                         </li>
-                                        <!--<li id="purchases_add_purchase_return">
+                                        <li id="purchases_add_purchase_return">
                                             <a class="submenu" href="<?= site_url('purchases/add_purchase_return'); ?>">
                                                 <i class="fa fa-plus-circle"></i>
                                                 <span class="text"> <?= lang('add_purchase_return'); ?></span>

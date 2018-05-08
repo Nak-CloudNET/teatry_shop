@@ -3829,6 +3829,7 @@ class Sales_model extends CI_Model
 				sales.reference_no, 
 				sales.saleman_by, 
 				sales.biller_id, 
+				sales.po, 
 				sales.customer_id, 
 				sales.sale_status, 
 				sales.grand_total,
