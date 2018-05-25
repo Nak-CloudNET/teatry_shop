@@ -2868,6 +2868,27 @@ class Purchases_model extends CI_Model
         return FALSE;
     }
 	
+	public function getCombinePaymentStatement($id)
+    {
+		$this->db->select('
+							id, 
+							date, 
+							reference_no, 
+							supplier_id, 
+							biller_id,
+							created_by,
+							grand_total, 
+							paid, 
+							(grand_total-paid) as balance');
+		$this->db->from('purchases');
+		$this->db->where_in('id', $id);
+        $q = $this->db->get();
+         if ($q->num_rows() > 0) {
+            return $q->result();
+        }
+		return FALSE;
+    }
+	
 	public function getPurchasesReferences($term, $limit = 10)
     {
         $this->db->select('reference_no');

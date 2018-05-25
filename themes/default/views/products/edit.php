@@ -336,9 +336,9 @@ foreach ($warehouses_products as $warehouses_product) {
                             <div class="col-md-8 col-sm-8 col-xs-8">
                                 <?php
                                 echo form_input('supplier', (isset($_POST['supplier']) ? $_POST['supplier'] : ''), 'class="form-control psupplier' . ($product ? '' : 'suppliers') . '" id="supplier1" placeholder="' . lang("select") . ' ' . lang("supplier") . '" style="width:100%;"')
-                                ?></div>
-                            <div
-                                class="col-md-4 col-sm-4 col-xs-4"><?= form_input('supplier_price', (isset($_POST['supplier_price']) ? $_POST['supplier_price'] : ""), 'class="form-control tip psupplierprice" id="supplier_price" placeholder="' . lang('supplier_price') . '"') ?></div>
+                                ?>
+							</div>
+                            <div class="col-md-4 col-sm-4 col-xs-4"><?= form_input('supplier_price', (isset($_POST['supplier_price']) ? $_POST['supplier_price'] : ""), 'class="form-control tip psupplierprice" id="supplier_price" placeholder="' . lang('supplier_price') . '"') ?></div>
                         </div>
                         <div id="ex-suppliers"></div>
                     </div>

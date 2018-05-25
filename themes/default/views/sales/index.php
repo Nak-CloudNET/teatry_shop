@@ -81,11 +81,15 @@
 
                 var action = $('td:eq(18)', nRow);
 				
-				if (aData[17] !=null) 
+				if (aData[17] != null) 
 				{
 					action.find('.down_payment').remove(); 
 				}else{
 					action.find('.edit_down_payment').remove(); 	
+				}
+				
+				if(aData[9] == 'returned') {
+					action.find('.edit').remove();
 				}
 				
 				nRow.className = "invoice_link";
@@ -119,12 +123,12 @@
 					balance += parseFloat(aaData[aiDisplay[i]][15]);
                 }
                 var nCells = nRow.getElementsByTagName('th');
-               nCells[10].innerHTML = currencyFormat(parseFloat(gtotal));
-                nCells[11].innerHTML = currencyFormat(parseFloat(return_s));
-               nCells[12].innerHTML = currencyFormat(parseFloat(gpaid));
-                nCells[13].innerHTML = currencyFormat(parseFloat(tdeposit));
-				 nCells[14].innerHTML = currencyFormat(parseFloat(dis));
-                nCells[15].innerHTML = currencyFormat(parseFloat(balance));
+					nCells[10].innerHTML = currencyFormat(parseFloat(gtotal));
+					nCells[11].innerHTML = currencyFormat(parseFloat(return_s));
+                    nCells[12].innerHTML = currencyFormat(parseFloat(gpaid));
+                    nCells[13].innerHTML = currencyFormat(parseFloat(tdeposit));
+				    nCells[14].innerHTML = currencyFormat(parseFloat(dis));
+					nCells[15].innerHTML = currencyFormat(parseFloat(balance));
             }
         }).fnSetFilteringDelay().dtFilter([
             {column_number: 1, filter_default_label: "[<?=lang('date');?> (yyyy-mm-dd)]", filter_type: "text", data: []},

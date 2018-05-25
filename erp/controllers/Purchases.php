@@ -3218,39 +3218,77 @@ class Purchases extends MY_Controller
         $this->page_construct('purchases/view_supplier_balance', $meta, $this->data);
     }
 	
+	function print_statement_header($id = NULL, $purchase = NULL)
+    {
+		$inv = $this->purchases_model->getCombinePaymentStatement($id);
+        $this->data['supplier'] = $this->site->getCompanyByID($purchase->supplier_id);
+        $this->data['biller'] = $this->site->getCompanyByID($purchase->biller_id);
+        $this->data['created_by'] = $this->site->getUser($purchase->create_by);
+        $this->data['invs'] = $inv;        
+        $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => site_url('purchases'), 'page' => lang('purchases')), array('link' => '#', 'page' => lang('view')));
+        $meta = array('page_title' => lang('view_purchases_details'), 'bc' => $bc);
+		$this->load->view($this->theme . 'purchases/print_statement_header', $this->data);
+    }
+	
+	function print_statement_no_header($id = NULL, $purchase = NULL)
+    {
+		$inv = $this->purchases_model->getCombinePaymentStatement($id);
+        $this->data['supplier'] = $this->site->getCompanyByID($purchase->supplier_id);
+        $this->data['biller'] = $this->site->getCompanyByID($purchase->biller_id);
+        $this->data['created_by'] = $this->site->getUser($purchase->create_by);
+        $this->data['invs'] = $inv;        
+        $bc = array(array('link' => base_url(), 'page' => lang('home')), array('link' => site_url('purchases'), 'page' => lang('purchases')), array('link' => '#', 'page' => lang('view')));
+        $meta = array('page_title' => lang('view_purchases_details'), 'bc' => $bc);
+		$this->load->view($this->theme . 'purchases/print_statement_no_header', $this->data);
+    }
+	
 	function getSupplierBalance_action($user_id){
 		
-        if ($this->input->post('form_action') == 'export_excel' || $this->input->post('form_action') == 'export_pdf') {
-            if ($_POST['val']) {
-                $this->load->library('excel');
-                $this->excel->setActiveSheetIndex(0);
+        if (!empty($_POST['val'])) {
+			if ($this->input->post('form_action') == 'print_statement_with_logo') {
+				foreach ($_POST['val'] as $id) {
+					$purchase = $this->site->getPayableByID($id);
+				}			
+				$this->print_statement_header($_POST['val'], $purchase);
+			}
+			if ($this->input->post('form_action') == 'print_statement_without_logo') {
+				foreach ($_POST['val'] as $id) {
+					$purchase = $this->site->getPayableByID($id);
+				}
+				$this->print_statement_no_header($_POST['val'], $purchase);
+			}
+			
+			if ($this->input->post('form_action') == 'export_excel' || $this->input->post('form_action') == 'export_pdf') {
+			   
+				$this->load->library('excel');
+				$this->excel->setActiveSheetIndex(0);
 				$supplier = $this->site->getCompanyNameByCustomerID($user_id);
-                $this->excel->getActiveSheet()->setTitle(lang('supplier'));
+				$this->excel->getActiveSheet()->setTitle(lang('supplier'));
 				$this->excel->getActiveSheet()->SetCellValue('D1', lang('supplier_balance'));
 				$this->excel->getActiveSheet()->setCellValue('A2','Supplier Name : ');
-                $this->excel->getActiveSheet()->setCellValue('B2', $supplier->company);
+				$this->excel->getActiveSheet()->setCellValue('B2', $supplier->company);
 				
-                $this->excel->getActiveSheet()->SetCellValue('A3', lang('date'));
-                $this->excel->getActiveSheet()->SetCellValue('B3', lang('due_date'));
-                $this->excel->getActiveSheet()->SetCellValue('C3', lang('reference_no'));
-                $this->excel->getActiveSheet()->SetCellValue('D3', lang('warehouse'));
-                $this->excel->getActiveSheet()->SetCellValue('E3', lang('supplier'));
-                $this->excel->getActiveSheet()->SetCellValue('F3', lang('grand_total'));
-                $this->excel->getActiveSheet()->SetCellValue('G3', lang('paid'));
-                $this->excel->getActiveSheet()->SetCellValue('H3', lang('balance'));
+				$this->excel->getActiveSheet()->SetCellValue('A3', lang('date'));
+				$this->excel->getActiveSheet()->SetCellValue('B3', lang('due_date'));
+				$this->excel->getActiveSheet()->SetCellValue('C3', lang('reference_no'));
+				$this->excel->getActiveSheet()->SetCellValue('D3', lang('warehouse'));
+				$this->excel->getActiveSheet()->SetCellValue('E3', lang('supplier'));
+				$this->excel->getActiveSheet()->SetCellValue('F3', lang('grand_total'));
+				$this->excel->getActiveSheet()->SetCellValue('G3', lang('paid'));
+				$this->excel->getActiveSheet()->SetCellValue('H3', lang('balance'));
 				$this->excel->getActiveSheet()->SetCellValue('I3', lang('payment_status'));
-                $this->excel->getActiveSheet()->getStyle('A1:I1')->getFont()->setBold(true);
-                $this->excel->getActiveSheet()->getStyle('A2:I2')->getFont()->setBold(true);
-                $this->excel->getActiveSheet()->getStyle('A3:I3')->getFont()->setBold(true);
-                $this->excel->getActiveSheet()->getStyle('A1:I1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $this->excel->getActiveSheet()->getStyle('A2:I2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $this->excel->getActiveSheet()->getStyle('A3:I3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-                $row = 4;
+				$this->excel->getActiveSheet()->getStyle('A1:I1')->getFont()->setBold(true);
+				$this->excel->getActiveSheet()->getStyle('A2:I2')->getFont()->setBold(true);
+				$this->excel->getActiveSheet()->getStyle('A3:I3')->getFont()->setBold(true);
+				$this->excel->getActiveSheet()->getStyle('A1:I1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				$this->excel->getActiveSheet()->getStyle('A2:I2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				$this->excel->getActiveSheet()->getStyle('A3:I3')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+				$row = 4;
 				$sum_grandtotal = 0;
 				$sum_paid = 0;
 				$sum_balance = 0;
-                foreach ($_POST['val'] as $id) {
-                        $supplier = $this->db
+				foreach ($_POST['val'] as $id) {
+						$supplier = $this->db
 						->select($this->db->dbprefix('purchases') . ".id, ".$this->db->dbprefix('purchases') . ".date, reference_no, due_date, " . 
 									 $this->db->dbprefix('warehouses') . ".name as wname, supplier ,
 									 grand_total, paid, (grand_total-paid) as balance, " . $this->db->dbprefix('purchases') . ".payment_status", FALSE)
@@ -3260,46 +3298,46 @@ class Purchases extends MY_Controller
 						->where(array('purchases.status' => 'received', 'purchases.payment_status <>' => 'paid','purchases.id' => $id))
 						->group_by('purchases.id')
 						->get("purchases")->result(); 
-                        foreach($supplier as $sup){ 
+						foreach($supplier as $sup){ 
 							$sum_grandtotal += $sup->grand_total;
 							$sum_paid += $sup->paid;
 							$sum_balance += $sup->balance;
-                            $this->excel->getActiveSheet()->SetCellValue('A' . $row,$sup->date);
-                            $this->excel->getActiveSheet()->SetCellValue('B' . $row, $sup->due_date);
-                            $this->excel->getActiveSheet()->SetCellValue('C' . $row, $sup->reference_no);
-                            $this->excel->getActiveSheet()->SetCellValue('D' . $row, $sup->wname);
-                            $this->excel->getActiveSheet()->SetCellValue('E' . $row, $sup->supplier);
-                            $this->excel->getActiveSheet()->SetCellValue('F' . $row, $this->erp->formatMoney($sup->grand_total));
-                            $this->excel->getActiveSheet()->SetCellValue('G' . $row, $this->erp->formatMoney($sup->paid));
-                            $this->excel->getActiveSheet()->SetCellValue('H' . $row, $this->erp->formatMoney($sup->balance));
+							$this->excel->getActiveSheet()->SetCellValue('A' . $row,$sup->date);
+							$this->excel->getActiveSheet()->SetCellValue('B' . $row, $sup->due_date);
+							$this->excel->getActiveSheet()->SetCellValue('C' . $row, $sup->reference_no);
+							$this->excel->getActiveSheet()->SetCellValue('D' . $row, $sup->wname);
+							$this->excel->getActiveSheet()->SetCellValue('E' . $row, $sup->supplier);
+							$this->excel->getActiveSheet()->SetCellValue('F' . $row, $this->erp->formatMoney($sup->grand_total));
+							$this->excel->getActiveSheet()->SetCellValue('G' . $row, $this->erp->formatMoney($sup->paid));
+							$this->excel->getActiveSheet()->SetCellValue('H' . $row, $this->erp->formatMoney($sup->balance));
 							$this->excel->getActiveSheet()->SetCellValue('I' . $row, $sup->payment_status);
-                           
+						   
 							$this->excel->getActiveSheet()->getStyle('F'. $row.':H'.$row)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
 							$i = $row+1;
 							$this->excel->getActiveSheet()->SetCellValue('F' . $i, $this->erp->formatMoney($sum_grandtotal));
 							$this->excel->getActiveSheet()->SetCellValue('G' . $i, $this->erp->formatMoney($sum_paid));
 							$this->excel->getActiveSheet()->SetCellValue('H' . $i, $this->erp->formatMoney($sum_balance));
 							$row++;
-                        }	
-                }
+						}	
+				}
 								
-    			
-                $this->excel->getActiveSheet()->getColumnDimension('A')->setWidth(25);
-                $this->excel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
-                $this->excel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
-                $this->excel->getActiveSheet()->getColumnDimension('D')->setWidth(25);
-                $this->excel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
-                $this->excel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
-                $this->excel->getActiveSheet()->getColumnDimension('G')->setWidth(15);
+				
+				$this->excel->getActiveSheet()->getColumnDimension('A')->setWidth(25);
+				$this->excel->getActiveSheet()->getColumnDimension('B')->setWidth(15);
+				$this->excel->getActiveSheet()->getColumnDimension('C')->setWidth(15);
+				$this->excel->getActiveSheet()->getColumnDimension('D')->setWidth(25);
+				$this->excel->getActiveSheet()->getColumnDimension('E')->setWidth(15);
+				$this->excel->getActiveSheet()->getColumnDimension('F')->setWidth(15);
+				$this->excel->getActiveSheet()->getColumnDimension('G')->setWidth(15);
 				$this->excel->getActiveSheet()->getColumnDimension('H')->setWidth(20);
 				$this->excel->getActiveSheet()->getColumnDimension('I')->setWidth(20);
 				
-                $filename = lang('supplier_banlance'). date('Y_m_d_H_i_s');
-                $this->excel->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
-                if ($this->input->post('form_action') == 'export_pdf') {
-                    $styleArray = array(
-                        'borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN))
-                    );
+				$filename = lang('supplier_banlance'). date('Y_m_d_H_i_s');
+				$this->excel->getDefaultStyle()->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);
+				if ($this->input->post('form_action') == 'export_pdf') {
+					$styleArray = array(
+						'borders' => array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN))
+					);
 					$this->excel->getActiveSheet()->getStyle('A3:I3')->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 					$rw = 4;
 					foreach ($_POST['val'] as $id) {						
@@ -3307,43 +3345,43 @@ class Purchases extends MY_Controller
 						$rw++;
 					}
 									
-                    $this->excel->getDefaultStyle()->applyFromArray($styleArray);
-                    $this->excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
-                    require_once(APPPATH . "third_party" . DIRECTORY_SEPARATOR . "MPDF" . DIRECTORY_SEPARATOR . "mpdf.php");
-                    $rendererName = PHPExcel_Settings::PDF_RENDERER_MPDF;
-                    $rendererLibrary = 'MPDF';
-                    $rendererLibraryPath = APPPATH . 'third_party' . DIRECTORY_SEPARATOR . $rendererLibrary;
-                    if (!PHPExcel_Settings::setPdfRenderer($rendererName, $rendererLibraryPath)) {
-                        die('Please set the $rendererName: ' . $rendererName . ' and $rendererLibraryPath: ' . $rendererLibraryPath . ' values' .
-                        PHP_EOL . ' as appropriate for your directory structure');
-                    }
+					$this->excel->getDefaultStyle()->applyFromArray($styleArray);
+					$this->excel->getActiveSheet()->getPageSetup()->setOrientation(PHPExcel_Worksheet_PageSetup::ORIENTATION_LANDSCAPE);
+					require_once(APPPATH . "third_party" . DIRECTORY_SEPARATOR . "MPDF" . DIRECTORY_SEPARATOR . "mpdf.php");
+					$rendererName = PHPExcel_Settings::PDF_RENDERER_MPDF;
+					$rendererLibrary = 'MPDF';
+					$rendererLibraryPath = APPPATH . 'third_party' . DIRECTORY_SEPARATOR . $rendererLibrary;
+					if (!PHPExcel_Settings::setPdfRenderer($rendererName, $rendererLibraryPath)) {
+						die('Please set the $rendererName: ' . $rendererName . ' and $rendererLibraryPath: ' . $rendererLibraryPath . ' values' .
+						PHP_EOL . ' as appropriate for your directory structure');
+					}
 
-                    header('Content-Type: application/pdf');
-                    header('Content-Disposition: attachment;filename="' . $filename . '.pdf"');
-                    header('Cache-Control: max-age=0');
+					header('Content-Type: application/pdf');
+					header('Content-Disposition: attachment;filename="' . $filename . '.pdf"');
+					header('Cache-Control: max-age=0');
 
-                    $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'PDF');
-                    $objWriter->save('php://output');
-                    exit();
-                }
-                if ($this->input->post('form_action') == 'export_excel') {				
-                    ob_clean();
+					$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'PDF');
+					$objWriter->save('php://output');
+					exit();
+				}
+				if ($this->input->post('form_action') == 'export_excel') {				
+					ob_clean();
 					$this->excel->getActiveSheet()->getStyle('F'.$i. ':H'.$i)->getBorders()->getTop()->setBorderStyle(PHPExcel_Style_Border::BORDER_THIN);
 					$this->excel->getActiveSheet()->getStyle('F'. $i.':H'.$i)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
-                    header('Content-Type: application/vnd.ms-excel');
-                    header('Content-Disposition: attachment;filename="' . $filename . '.xls"');
-                    header('Cache-Control: max-age=0');
-                
-                    ob_clean();
-                    $objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
-                    $objWriter->save('php://output');
-                    exit();
-                }
-             }else {
-                $this->session->set_flashdata('error', $this->lang->line("no_supplier_selected. Please select at least one."));
-                redirect($_SERVER["HTTP_REFERER"]);
-            }
-        }
+					header('Content-Type: application/vnd.ms-excel');
+					header('Content-Disposition: attachment;filename="' . $filename . '.xls"');
+					header('Cache-Control: max-age=0');
+				
+					ob_clean();
+					$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel5');
+					$objWriter->save('php://output');
+					exit();
+				}
+			}
+		}else {
+			$this->session->set_flashdata('error', $this->lang->line("no_supplier_selected"));
+			redirect($_SERVER["HTTP_REFERER"]);
+		}
     }
 	
 	function supplier_balance_actions()

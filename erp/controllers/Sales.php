@@ -1569,7 +1569,7 @@ AND "2018-03-31 23:59:00"';
                 }
                 
             } else {
-                $this->session->set_flashdata('error', $this->lang->line("no_supplier_selected"));
+                $this->session->set_flashdata('error', $this->lang->line("no_customer_selected"));
                 redirect($_SERVER["HTTP_REFERER"]);
             }
         } else {
@@ -2815,6 +2815,36 @@ AND "2018-03-31 23:59:00"';
 		$this->data['payment'] 		= $this->sales_model->getPaymentBySaleID($id);
 		$this->data['logo'] 		= true;
         $this->load->view($this->theme . 'sales/invoice_a5', $this->data);
+    }
+	
+	function printMorePage($id = NULL)
+    {
+		if ($this->input->get('id')) {
+            $id = $this->input->get('id');
+        }
+		
+		$this->load->model('pos_model');
+		$this->data['pos'] 			= $this->pos_model->getSetting();
+		
+		$this->data['error'] 		= (validation_errors()) ? validation_errors() : $this->session->flashdata('error');
+        
+		$inv 						= $this->sales_model->getInvoiceByID($id);
+		$this->data['Settings'] = $this->site->get_setting();
+        $this->data['customer'] 	= $this->site->getCompanyByID($inv->customer_id);
+        $this->data['biller'] 		= $this->site->getCompanyByID($inv->biller_id);
+        $this->data['created_by'] 	= $this->site->getUser($inv->created_by);
+		$this->data['cashier'] 		= $this->site->getUser($inv->saleman_by);
+        $this->data['updated_by'] 	= $inv->updated_by ? $this->site->getUser($inv->updated_by) : NULL;
+        $this->data['warehouse'] 	= $this->site->getWarehouseByID($inv->warehouse_id);
+        $this->data['inv'] 			= $inv;
+		
+		$this->data['vattin'] 		= $this->site->getTaxRateByID($inv->order_tax_id);
+        $return 					= $this->sales_model->getReturnBySID($id);
+        $this->data['return_sale'] 	= $return;
+        $this->data['rows'] 		= $this->sales_model->getAllInvoicesItem($id);
+		$this->data['payment'] 		= $this->sales_model->getPaymentBySaleID($id);
+		$this->data['logo'] 		= true;
+        $this->load->view($this->theme . 'sales/print_green', $this->data);
     }
 	
 	function invoice_teatry($id = NULL)

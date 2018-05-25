@@ -149,11 +149,21 @@
 								</li>
 							<?php }?>
 						<?php }?>	
-                        <li>
+                        <!-- <li>
                             <a href="#" id="combine" data-action="combine">
                                 <i class="fa fa-file-pdf-o"></i> <?=lang('combine_to_pdf')?>
                             </a>
-                        </li>
+                        </li> -->
+						<li>
+							<a href="#" id="combine" data-action="print_statement_with_logo">
+								<i class="fa fa-file-pdf-o"></i> <?=lang('statement_with_logo')?>
+							</a>
+						</li>
+						<li>
+							<a href="#" id="combine" data-action="print_statement_without_logo">
+								<i class="fa fa-file-pdf-o"></i> <?=lang('statement_without_logo')?>
+							</a>
+						</li>
                     </ul>
                 </div>
             </div>

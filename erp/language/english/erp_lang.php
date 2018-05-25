@@ -951,3 +951,7 @@ $lang['deposited']                         	= "Deposited";
 $lang['total_expenses']                     = "Total Expenses";
 $lang['total_returned']                     = "Total Returned";
 $lang['amount_in_word']                     = "Amount In Word";
+$lang['no_customer_selected']               = "No customer selected";
+$lang['no_supplier_selected']               = "No supplier selected";
+$lang['statement_with_logo']                = "Statement With Logo";
+$lang['statement_without_logo']             = "Statement Without Logo";

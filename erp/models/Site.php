@@ -774,7 +774,7 @@ class Site extends CI_Model
 	public function getPayableByID($id=null, $wh=null)
 	{
 		$this->db
-				->select("id,date,reference_no,order_ref,request_ref,supplier,status,grand_total,
+				->select("id, date, reference_no, order_ref, request_ref, supplier, supplier_id, biller_id, created_by, status, grand_total,
 					paid, (grand_total - paid) AS balance,payment_status")
                 ->from('purchases')
 				->where(array('payment_status !='=>'paid', 'id'=>$id));

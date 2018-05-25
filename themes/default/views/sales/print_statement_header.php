@@ -50,7 +50,7 @@
 		border: 1px solid #000000;
 		height: 95px;
 		padding : 5px;
-		width: 80%;
+		width: 83%;
 		font-size:11px;
 	}
 	.box2{

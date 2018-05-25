@@ -52,11 +52,11 @@
             'fnRowCallback': function (nRow, aData, iDisplayIndex) {
                 var oSettings = oTable.fnSettings();
                 nRow.id = aData[0];
-
-                var action = $('td:eq(11)', nRow);
-                if (aData[10] == 'paid') {
-                    action.find('.edit').remove();
-                }
+				
+                var action = $('td:eq(14)', nRow);
+				if(aData[6] == 'returned') {
+					action.find('.edit').remove();
+				}
 
                 nRow.className = "receipt_link";
                 return nRow;

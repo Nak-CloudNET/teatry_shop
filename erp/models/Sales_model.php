@@ -3863,7 +3863,7 @@ class Sales_model extends CI_Model
 		$this->db->select('id, date, reference_no, supplier,status, grand_total, paid, (grand_total-paid) as balance, payment_status');
 		$this->db->from('erp_purchases');
 		$this->db->where_in('id', $id);
-		$this->db->where('paid<grand_total');
+		$this->db->where('paid < grand_total');
         $q = $this->db->get();
          if ($q->num_rows() > 0) {
             return $q->result();

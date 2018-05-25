@@ -245,7 +245,7 @@
 													<li>ទំនិញទិញហើយមិនអាចប្តូរយកប្រាក់វិញបានឡើយ.</li>
 													<li>អ្នកទិញត្រូវរាប់និងពិនិត្យទំនិញឲ្យបានត្រឺមត្រូវ មុនចុះហត្ថលេខាទទួល.</li>
 													<li>ចំពោះទំនិញដែលបានកម្មង់គឺមិនអាចសងចូលវិញបានទេ.</li>
-													<li>តំលៃទំនិញទាំងអស់នេះប្រាក់ពន្ធបន្ថែម VAT 10%​ ជាបន្ទុករបស់អ្នកទិញ.</li>
+													<li>តំលៃទំនិញទាំងអស់នេះមិនរាប់បញ្ចូលជាមួយប្រាក់ពន្ធបន្ថែម VAT 10%​ នោះទេ.</li>
 													<li>សូមបញ្ជាក់ថាហាងយើងខ្ញុំផ្ដល់សេវាបញ្ជូនទំនិញត្រឹមជាន់ផ្ទាល់ដីតែប៉ុណ្ណោះ រាល់ការទាមទារក្រៅពីនេះយើងខ្ញុំមិនទទួលខុសត្រូវឡើយ.</li>
 												</ul>
 											</div>
@@ -324,6 +324,9 @@
 				</span>
 				<span class="no-print col-xs-2">
 					<a href="<?=base_url()?>pos/invoice_combo/<?=$inv->id?>" target="_blank" class="btn btn-block btn-primary no-print" ><?= lang("print_a4_combo"); ?></a>
+				</span>
+				<span class="no-print col-xs-2">
+					<a href="<?=base_url()?>sales/printMorePage/<?=$inv->id?>" target="_blank" class="btn btn-block btn-primary no-print" ><?= lang("print_more_page"); ?></a>
 				</span>
 			</div>
 		</div>

@@ -411,6 +411,7 @@ class Pos_model extends CI_Model
                 $item['sale_id'] = $sale_id;
                 $this->db->insert('sale_items', $item);
 				$sale_item_id = $this->db->insert_id();
+				$items[$i]['date'] 				= date('Y-m-d', strtotime($data['date']));
 				$items[$i]['transaction_type'] 	= 'SALE';
 				$items[$i]['transaction_id'] 	= $sale_item_id;
 				$items[$i]['status'] 			= ($data['sale_status'] == 'completed'?'received':'');
@@ -441,13 +442,10 @@ class Pos_model extends CI_Model
 			foreach($loans as $loan) {
 				$loan['sale_id'] = $sale_id;
 				$this->db->insert('loans', $loan);
-			}
-			
-			$cost = $this->site->costing($items);
-			
+			}			
             if ($data['sale_status'] == 'completed') {
+				$cost = $this->site->costing($items);
                 $this->site->syncPurchaseItems($cost);
-				//$this->site->syncQuantities($items);
             }
 
             $msg = array();
