@@ -74,8 +74,8 @@
                                 <div class="payment">
                                     <div class="form-group">
                                         <?= lang("amount", "amount_1"); ?>
-                                        <input name="amount-paid" type="text" id="amount_1" amount="<?= $this->erp->formatDecimal($inv->grand_total - $inv->paid); ?>"
-                                               value="<?= $this->erp->formatDecimal($inv->grand_total - $inv->paid); ?>"
+                                        <input name="amount-paid" type="text" id="amount_1" amount="<?= $this->erp->formatPurDecimal($inv->grand_total - $inv->paid); ?>"
+                                               value="<?= $this->erp->formatPurDecimal($inv->grand_total - $inv->paid); ?>"
                                                class="pa form-control kb-pad amount" required="required"/>
                                     </div>
                                 </div>
