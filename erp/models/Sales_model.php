@@ -648,7 +648,7 @@ class Sales_model extends CI_Model
         					products.details as details,
         					product_variants.name as variant,
         					product_variants.qty_unit,
-        					units.name as unit,
+        					IF (erp_sale_items.option_id > 0, erp_product_variants.name, erp_units.name) as unit,
         					products.promotion,
         					products.promo_price,
         					categories.name AS category_name,

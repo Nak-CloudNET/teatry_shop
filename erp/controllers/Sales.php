@@ -477,7 +477,7 @@ class Sales extends MY_Controller
 				->join('quotes', 'quotes.id = sales.quote_id', 'left')
 				->join('companies', 'companies.id = sales.customer_id', 'left');
 			
-            if (isset($_REQUEST['a'])) {
+        /*    if (isset($_REQUEST['a'])) {
                 $alert_ids = explode('-', $_GET['a']);
                 $alert_id  = $_GET['a'];
 
@@ -490,7 +490,7 @@ class Sales extends MY_Controller
                     $this->datatables->where('DATE_SUB(erp_sales.date, INTERVAL 1 DAY) <= CURDATE()');
                     $this->datatables->where('sales.id', $alert_id);
                 }
-            }
+            } */
 			
         }
 		if ($product_id) {
@@ -539,10 +539,8 @@ class Sales extends MY_Controller
 
 		if ($start_date) {
 			$this->datatables->where($this->db->dbprefix('sales').'.date BETWEEN "' . $start_date . ' 00:00:00" and "' . $end_date . '23:59:00"');
-		}
-		
-		$this->datatables->group_by('sales.id');
-		
+		}		
+		$this->datatables->group_by('sales.id');		
         $this->datatables->add_column("Actions", $action, "sales.id");
         echo $this->datatables->generate();
     }
@@ -16928,5 +16926,31 @@ AND "2018-03-31 23:59:00"';
         $this->data['title'] = "2";
         $this->data['sid'] = $id;
         $this->load->view($this->theme .'sales/return_chea_kheng',$this->data);
+    }
+	function print_green($id = NULL, $view = NULL, $save_bufffer = NULL)
+    {
+        $this->erp->checkPermissions('add', true, 'sales');
+
+        if ($this->input->get('id')) {
+            $id = $this->input->get('id');
+        }
+		$this->load->model('pos_model');
+		$this->data['pos'] = $this->pos_model->getSetting();
+        $this->data['error'] = (validation_errors()) ? validation_errors() : $this->session->flashdata('error');
+        $inv = $this->sales_model->getInvoiceByID($id);
+        $this->erp->view_rights($inv->created_by);
+        $this->data['barcode'] = "<img src='" . site_url('products/gen_barcode/' . $inv->reference_no) . "' alt='" . $inv->reference_no . "' class='pull-left' />";
+        $this->data['customer'] = $this->site->getCompanyByID($inv->customer_id);
+        $this->data['payments'] = $this->sales_model->getPaymentsForSale($id);
+        $this->data['biller'] = $this->site->getCompanyByID($inv->biller_id);
+        $this->data['user'] = $this->site->getUser($inv->created_by);
+        $this->data['warehouse'] = $this->site->getWarehouseByID($inv->warehouse_id);
+        $this->data['inv'] = $inv;
+        $return = $this->sales_model->getReturnBySID($id);
+        $this->data['return_sale'] = $return;
+        $this->data['rows'] = $this->sales_model->getAllInvoiceItems($id);
+        $this->data['return_items'] = $return ? $this->sales_model->getAllReturnItems($return->id) : NULL;
+		$this->data['sid'] = $id;
+        $this->load->view($this->theme.'sales/print_green',$this->data);
     }
 }

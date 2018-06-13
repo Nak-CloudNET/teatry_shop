@@ -624,7 +624,7 @@
     </span>
     <?php } ?>
     <span class="pull-right col-xs-12">
-        <a href="<?=base_url()?>sales/invoice_a5/<?=$sid?>" target="_blank" class="btn btn-block btn-primary" ><?= lang("print_a4"); ?></a>
+        <a href="<?=base_url()?>sales/print_green/<?=$sid?>" target="_blank" class="btn btn-block btn-primary" ><?= lang("print_a4"); ?></a>
     </span>
 	<span class="pull-right col-xs-12">
         <a href="<?=base_url()?>pos/invoice_combo/<?=$sid?>" target="_blank" class="btn btn-block btn-primary" ><?= lang("print_a4_combo"); ?></a>
