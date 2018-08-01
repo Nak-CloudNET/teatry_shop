@@ -111,6 +111,15 @@
 				{"sClass": "join_lease_id"},
 				{"bSortable": false}
 			],
+            "aoColumnDefs": [
+                <?php if (!$GP['products-cost'] && !$GP['products-price']){ ?>
+                { "bSearchable": false, "aTargets": [10,11,12,13,14,15] },
+                <?php }elseif (!$GP['products-cost'] || !$GP['products-price']){?>
+                { "bSearchable": false, "aTargets": [8] },
+                <?php }if($GP['products-cost'] && $GP['products-price']){?>
+                { "bSearchable": false, "aTargets": [9] },
+                <?php }?>
+            ],
             "fnFooterCallback": function (nRow, aaData, iStart, iEnd, aiDisplay) {
                 var gtotal = 0, tdeposit = 0, paid = 0, balance = 0, status = ' ',gpaid=0,dis = 0,return_s = 0;
                 for (var i = 0; i < aaData.length; i++) {
