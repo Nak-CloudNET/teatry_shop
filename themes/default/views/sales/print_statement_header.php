@@ -48,14 +48,16 @@
 	}
 	.box1 {
 		border: 1px solid #000000;
-		height: 95px;
+		height: 100%;
 		padding : 5px;
-		width: 83%;
+		width: 90%;
 		font-size:11px;
+
 	}
 	.box2{
+
 		border: 1px solid #000000;
-		height:95px;
+		height:100%;
 		width:100%;
 		padding: 5px;
 		font-size:11px;
@@ -94,48 +96,53 @@
                 </div>
 			</div>
 			<div class="row" style="padding-top:10px !important;">
-				<div class="col-sm-7 col-xs-7">
-					<div class="box1">
-						<table style="font-size: 13px;line-height:22px !important;">
-							<tr>
-								<td style="width: 10%;">ជំរាប ជូន </td>
-								<td style="width: 3%;">:</td>
-								<td style="width: 50%;"><?= $customer->company; ?></td>
-							</tr>
-							<tr>
-								<td style="width: 10%;">ឈ្មោះអតិថិជន</td>
-								<td style="width: 3%;">:</td>
-								<td style="width: 50%;"><?= $customer->name; ?></td>
-							</tr>
-							<tr>
-								<td style="width: 10%;">ទូរស័ព្ទ</td>
-								<td style="width: 3%;">:</td>
-								<td style="width: 50%;"><?= $customer->phone; ?></td>
-							</tr>
-							<tr>
-								<td style="width: 10%;">អាស័យដ្ឋាន</td>
-								<td style="width: 3%;">:</td>
-								<td style="width: 50%;"><?= $customer->address; ?></td>
-							</tr>
-						</table>
-					</div>
-				</div>
-				<div class="col-sm-5 col-xs-5 pull-right">
-					<div class="box2">
-						<table style="font-size: 13px;line-height:25px !important;">
-							<tr>
-								<td style="width: 30%;">Printed Date</td>
-								<td style="width: 5%;text-align:right !important;">:</td>
-								<td style="width:50%;padding-left:10px !important;"><?= date('d-m-Y H:i'); ?></td>
-							</tr>
-							<tr>
-								<td class="td_saler" style="width: 30%;">អ្នកលក់</td>
-								<td style="width: 5%;text-align:right !important;">:</td>
-								<td style="width: 50%;padding-left:10px !important;"><?= $saleman_by->username; ?></td>
-							</tr>
-						</table>
-					</div>
-				</div>
+                <table width="100%">
+                    <tr>
+                        <td width="55%">
+                            <div class="box1">
+                                <table style="font-size: 13px;line-height:22px !important;">
+                                    <tr>
+                                        <td style="width: 10%;">ជំរាប ជូន </td>
+                                        <td style="width: 3%;">:</td>
+                                        <td style="width: 50%;"><?= $customer->company; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 10%;">ឈ្មោះអតិថិជន</td>
+                                        <td style="width: 3%;">:</td>
+                                        <td style="width: 50%;"><?= $customer->name; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 10%;">ទូរស័ព្ទ</td>
+                                        <td style="width: 3%;">:</td>
+                                        <td style="width: 50%;"><?= $customer->phone; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 10%;">អាស័យដ្ឋាន</td>
+                                        <td style="width: 3%;">:</td>
+                                        <td style="width: 50%;"><?= $customer->address; ?></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="box2">
+                                <table style="font-size: 13px;line-height:25px !important;">
+                                    <tr>
+                                        <td style="width: 30%;">Printed Date</td>
+                                        <td style="width: 5%;text-align:right !important;">:</td>
+                                        <td style="width:50%;padding-left:10px !important;"><?= date('d-m-Y H:i'); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="td_saler" style="width: 30%;">អ្នកលក់</td>
+                                        <td style="width: 5%;text-align:right !important;">:</td>
+                                        <td style="width: 50%;padding-left:10px !important;"><?= $saleman_by->username; ?></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-xs-12" style="margin-top: 10px;">

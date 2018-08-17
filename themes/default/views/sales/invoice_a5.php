@@ -42,7 +42,7 @@
 				padding:0px;
 				border-bottom:dotted 1px black;
 				font-size:14px;
-				
+
 			}
 			.bold{font-weight:bold;border-bottom:dotted 2px black !important;}
 			ul.list-right{
@@ -61,27 +61,15 @@
 				#buttons{
 					display:none;
 				}
-			} 
+			}
 			.box1 {
-				border: 1px solid #000000;
-				height: 95px;
-				padding: 10px;
-				width: 52%;
-				font-size:11px;
-				line-height : 20px;
+				width: 95%;
 			}
 			.box2{
-				border: 1px solid #000000;
-				height:95px;
-				width:42%;
-				padding: 10px;
-				font-size:11px;
-				line-height : 20px;
+	            width: 100%;
 			}
-			.box3{
-				height: 95px;
-				width: 6%;
-			}
+
+
 			.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
 				border:1px solid #000000;
 				line-height: 1.42857;
@@ -91,50 +79,88 @@
 			th{
 				text-align:center;
 			}
-			
-		
+            .tb_info{
+                height: max-content;
+            }
+            .tb_info tr{
+                /*background: yellow;*/
+
+            }
+            .tb_info td:first-child{
+                width: 51%;
+            }
+            .tb_info td{
+
+                /*background: red;*/
+                border: none!important;
+            }
+            .box2,.box1{
+                /*background: yellow;*/
+                border: 1px solid black!important;
+                height: 100%;
+                /*width: 100%;*/
+                padding: 10px;
+                font-size:11px;
+                line-height : 20px;
+
+            }
+
 		</style>
+
 	</head>
 	<body>
 		<div class="container bottom-print">
-			<div class="text-center" style="padding:10px;"> 
+			<div class="text-center" style="padding:10px;">
 				<button class="btn btn-xs btn-default no-print pull-left" onclick="window.print()"><i class="fa fa-print"></i>&nbsp;<?= lang("print"); ?></button>
 			</div>
 		</div>
 		<div class="container">
 			<h2 class="text-center"><b style="float:left">TTR II</b><b>វិក័យប័ត្រ /  Invoice</b></h2>
 			<br>
-			<div class="col-xs-12">
-				<div class="box1 col-xs-3">
-					<div style="font-size: 12px;">
-						<div>
-							<span><b>ក្រុមហ៊ុន / Company</b></span><span>: <?=$customer->company;?></span>
-						</div>
-						<div>
-							<span><b>អតិថិជន​ / Customer</b></span><span>: <?=$customer->name;?></span>
-						</div>
-						<div>
-							<span><b>អាស័យដ្ឋាន / Address</b></span><span>: <?=$customer->address;?></span>
-						</div>
-						<div>
-							<span><b>លេខទូរស័ព្ទ / Phone No</b></span><span>: <?=$customer->phone;?></span>
-						</div>
-					</div>
-				</div>
-				<div class="box3 col-xs-6"></div>
-				<div class="box2 col-xs-3">
-					<div style="font-size: 12px;">
-						<div>
-							<span><b>ថ្ងៃខែ​ឆ្នាំ / Date</b></span><span>: <?=$this->erp->hrsd($inv->date);?></span>
-						</div>
-						<div>
-							<span><b>លេខ​វិ​ក័​យ​ប័ត្រ / Invoice no</b></span><span style="font-weight:bold;">: <?=$inv->reference_no?></span>
-						</div>
-						<div>
-							<span><b>PO</b></span><span style="font-weight:bold;">: <?=$inv->po?></span>
-						</div>
-					</div>	
-				</div>
+			<div class="col-xs-12 border_box">
+
+<!--				<div class="box3 col-xs-6"></div>-->
+
+
+                <table class="tb_info ">
+                    <tr>
+                        <td>
+                            <div class="box1 col-xs-3">
+                                <div style="font-size: 12px;">
+                                    <div>
+                                        <span><b>ក្រុមហ៊ុន / Company</b></span><span>: <?=$customer->company;?></span>
+                                    </div>
+                                    <div>
+                                        <span><b>អតិថិជន​ / Customer</b></span><span>: <?=$customer->name;?></span>
+                                    </div>
+                                    <div>
+                                        <span><b>អាស័យដ្ឋាន / Address</b></span><span>: <?=$customer->address;?></span>
+                                    </div>
+                                    <div>
+                                        <span><b>លេខទូរស័ព្ទ / Phone No</b></span><span>: <?=$customer->phone;?></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="">
+                            <div class="box2 col-xs-3 ">
+                                <div style="font-size: 12px;">
+                                    <div>
+                                        <span><b>ថ្ងៃខែ​ឆ្នាំ / Date</b></span><span>: <?=$this->erp->hrsd($inv->date);?></span>
+                                    </div>
+                                    <div>
+                                        <span><b>លេខ​វិ​ក័​យ​ប័ត្រ / Invoice no</b></span><span style="font-weight:bold;">: <?=$inv->reference_no?></span>
+                                    </div>
+                                    <div>
+                                        <span><b>PO</b></span><span style="font-weight:bold;">: <?=$inv->po?></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
 			</div>
 		</div>
 		<div class="container">
@@ -148,7 +174,7 @@
 								<th style="width: 70px !important;">ខ្នាត<br>Unit</th>
 								<th style="width: 81px !important;">ចំនួន<br>Qty</th>
 								<th style="width: 99px !important;">តំលៃ<br>Unit Price</th>
-								<?php 
+								<?php
 								if ($Settings->product_discount) {
 									echo '<th>បញ្ចុះតំលៃ<br>Discount</th>';
 								}
@@ -157,11 +183,11 @@
 							</tr>
 						</body>
 						<body class="body_append">
-							<?php 
+							<?php
 							$i = 1;
 							$stotal = 0;
 							$unit = "";
-							
+
 							$qty = 0;
 								foreach($rows as $row){
 									if($row->option_id == 0 || $row->option_id==""){
@@ -186,11 +212,11 @@
 										}
 									?>
 									<td style="text-align:center;">
-									<?php if($row->unit_price == 0){echo "Free";}else{ echo $row->subtotal!=0?'$'.$this->erp->formatMoney($row->subtotal):$t; ?>&nbsp<?php echo $sym;}?> </td>		
+									<?php if($row->unit_price == 0){echo "Free";}else{ echo $row->subtotal!=0?'$'.$this->erp->formatMoney($row->subtotal):$t; ?>&nbsp<?php echo $sym;}?> </td>
 								</tr>
 								<?php
 								$i++;
-							
+
 								$stotal +=$qty*$row->unit_price;
 									}
 									for($k = 0;$k<0;$k++){
@@ -205,7 +231,7 @@
 									<td></td>
 									<td></td>
 								</tr>-->
-							<?php 
+							<?php
 							$i++;
 								}
 								?>
@@ -229,14 +255,14 @@
 									{
 										echo "<p style='font-size:12px;'>".$inv->note."</p>";
 									}else{
-										
+
 									}
 								?>
 							</td>
 						</tr>
 						<tr style="font-size: 13px;" class="footer">
 							<td colspan="7">
-								<table style="border: none !important;" class="footer">	
+								<table style="border: none !important;" class="footer">
 									<tr style="font-size: 13px;" class="footer">
 										<td colspan="4">
 											<div class="foot-left">
@@ -334,7 +360,7 @@
 </html>
 <script>
 	$("document").ready(function(e){
-		window.print();
+		// window.print();
 		var sum = 0;
 		var a=1;
 		$('#table-bordered tr.blank').each(function(i,el) {
@@ -344,13 +370,14 @@
 		});
 		for(i=0;i<=19;i++)
 		{
-			if((sum+29) < 320) 
+			if((sum+29) < 320)
 			{
 				$('#table-bordered > tbody').append('<tr style="font-size: 13px;border 1px solid #000000;" class="blank"><td><center>'+a+'<center></td><td></td><td></td><td></td><td></td><td></td><td></td><tr>');
 				sum=sum+29;
 				a++;
 			}
-			
+
 		}
+
 	});
 </script>
