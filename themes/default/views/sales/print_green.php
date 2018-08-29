@@ -106,6 +106,7 @@
 			
 		}
 		
+		
 		.box1 {
 			border: 1px solid #000000;
 			height: 95px;
@@ -194,10 +195,10 @@ $head1='<div class="title">
 	</div>' ;
 	
 	$head='
-			<h2 class="text-center"><b style="float:left">TTR II</b><b>វិក័យប័ត្រ /  Invoice</b></h2>
+			<h3 class="text-center"><b style="float:left">TTR II</b><b>វិក័យប័ត្រ /  Invoice</b></h3>
 			
-			<div class="col-xs-12" style="margin-bottom:15px;">
-				<div class="box1 col-xs-5" style ="border:1px solid black;">
+			<div class="col-xs-12" style="margin-bottom:5px;">
+				<div class="box1 col-xs-5" style ="border:1px solid black;height:100%;">
 					<div style="font-size: 12px;">
 						<div>
 							<span><b>ក្រុមហ៊ុន / Company</b></span><span>: ' . $customer->company . '</span>
@@ -214,7 +215,7 @@ $head1='<div class="title">
 					</div>
 				</div>
 				<div class="box3 col-xs-2"></div>
-				<div class="box2 col-xs-5" style ="border:1px solid black;>
+				<div class="box2 col-xs-5" style ="border:1px solid black;height:100%;">
 					<div style="font-size: 12px;">
 						<div>
 							<span><b>ថ្ងៃខែ​ឆ្នាំ / Date</b></span><span>: '. $this->erp->hrsd($inv->date) .'</span>
@@ -234,12 +235,12 @@ $head1='<div class="title">
 $table='<div class="col-xs-12"><table width="100%">
 				<tr style="border-top:solid 1px black; 
 					border-bottom:solid 1px black;">
-					<td width="5%"><b>ល.រ</b><br/>
-					<td  width="40%"><b>បរិយាយ</b><br/><b>Description</b>
-					<td  width="10%"><b>ខ្នាត</b><br/><b>Unit</b>
-					<td  width="10%"><b>ចំនួន</b><br/><b>Qty</b>
-					<td  width="10%"><b>តំលៃ</b><br/><b>Unit Price</b>
-					<td  width="13%"><b>បញ្ជុះតម្លៃ</b><br/><b>Discount</b>
+					<td width="3%"><b>ល.រ</b><br/>
+					<td  width="53%"><b>បរិយាយ</b><br/><b>Description</b>
+					<td  width="7%%"><b>ខ្នាត</b><br/><b>Unit</b>
+					<td  width="8%"><b>ចំនួន</b><br/><b>Qty</b>
+					<td  width="9%"><b>តំលៃ</b><br/><b>Unit Price</b>
+					<td  width="8%"><b>បញ្ជុះតម្លៃ</b><br/><b>Discount</b>
 					<td  width="12%"><b>តំលៃសរុប</b><br/><b>Amount</b>
 				</tr>
 			';
@@ -265,7 +266,8 @@ $table='<div class="col-xs-12"><table width="100%">
 					$product_name = $row->product_name;
 					//$this->erp->print_arrays($product_name);
 					//$product_name = word_limiter(strip_tags($product_name), 5);
-					$discount = $row->discount > 0 ? '('.$row->discount .')'.' '.$row->item_discount :'0.000';
+					//$discount = $row->discount > 0 ? '('.$row->discount .')'.' '.$row->item_discount :'0.000';
+					$discount = $row->discount > 0 ? $row->discount :'0.000';
 					$unit = $row->unit;
 					
 					$qty=$row->subtotal!=0?$this->erp->formatMoney($row->unit_price):$free;
@@ -274,22 +276,40 @@ $table='<div class="col-xs-12"><table width="100%">
 					
 					if($i==14 || $i==28 || $i==42 || $i==56 || $i==70){
 						if(mb_strlen($product_name, "UTF-8") > 45){
-							$arr = explode("/", $product_name);
-							$tablebody[$n_page].='<tr border-bottom:solid 1px black;">
-							<td>'.$i.'</td>
-							<td style="text-align:left;text-align:left;font-size:13px;padding-left:5px;line-height:1.3">
-								<div style="position:relative;">
-									<div style="position:absolute;top:-17px;">'.$arr[0].'</div>
-									<div style="position:absolute;top:-2px;">'.$arr[1].'</div>
-								</div>
-							</td>
-							<td style="text-align:center;">'.$unit.'</td>
-							<td>'.$this->erp->formatDecimal($row->quantity).'</td>
-							<td style="font-weight:bold;">'.$qty.'</td>
 							
-							<td style="font-weight:bold;">'.$discount.'</td>
-							<td>$'.$amount.'</td>
-							</tr>';
+							$arr = array();
+							$pname = strpos($product_name, '/');
+							if ($pname !== false) {
+								$arr = explode("/", $product_name);
+							}
+							
+							if($arr){
+								$tablebody[$n_page].='<tr>
+								<td>'.$i.'</td>
+								<td style="text-align:left;text-align:left;font-size:13px;padding-left:5px;line-height:1.3">
+									<div style="position:relative;">
+										<div style="position:absolute;top:-17px;">'.$arr[0].'</div>
+										<div style="position:absolute;top:-2px;">'.$arr[1].'</div>
+									</div>
+								</td>
+								<td style="text-align:center;">'.$unit.'</td>
+								<td>'.$this->erp->formatDecimal($row->quantity).'</td>
+								<td>$'.$qty.'</td>
+								<td style="font-weight:bold;">'.$discount.'</td>
+								<td>$'.$amount.'</td>
+								</tr>';
+							}else{
+								$tablebody[$n_page].='<tr>
+								<td>'.$i.'</td>
+								<td style="text-align:left;font-size:13px;padding-left:5px;">'.$product_name.'</td>
+								<td style="text-align:center;">'.$unit.'</td>
+								<td>'.$this->erp->formatDecimal($row->quantity).'</td>
+								<td>$'.$qty.'</td>
+								<td style="font-weight:bold;">'.$discount.'</td>
+								<td>$'.$amount.'</td>
+								</tr>';
+							}
+							
 							
 						}else{
 							
@@ -308,22 +328,43 @@ $table='<div class="col-xs-12"><table width="100%">
 					}else{
 						
 						if(mb_strlen($product_name, "UTF-8") > 45){
-							//$this->erp->print_arrays(mb_strlen($product_name, "UTF-8"));
-							$arr = explode("/", $product_name);
-							$tablebody[$n_page].='<tr>
-							<td>'.$i.'</td>
-							<td style="text-align:left;text-align:left;font-size:13px;padding-left:5px;line-height:1.3">
-								<div style="position:relative;">
-									<div style="position:absolute;top:-17px;">'.$arr[0].'</div>
-									<div style="position:absolute;top:-2px;">'.$arr[1].'</div>
-								</div>
-							</td>
-							<td style="text-align:center;">'.$unit.'</td>
-							<td>'.$this->erp->formatDecimal($row->quantity).'</td>
-							<td>$'.$qty.'</td>
-							<td style="font-weight:bold;">'.$discount.'</td>
-							<td>$'.$amount.'</td>
-							</tr>';
+							$a = mb_strlen($product_name, "UTF-8");
+							
+							$arr = array();
+							$pname = strpos($product_name, '/');
+							if ($pname !== false) {
+								$arr = explode("/", $product_name);
+							}
+							
+							if($arr){
+								$tablebody[$n_page].='<tr>
+								<td>'.$i.'</td>
+								<td style="text-align:left;text-align:left;font-size:13px;padding-left:5px;line-height:1.3">
+									<div style="position:relative;">
+										<div style="position:absolute;top:-17px;">'.$arr[0].'</div>
+										<div style="position:absolute;top:-2px;">'.$arr[1].'</div>
+									</div>
+									
+								</td>
+								<td style="text-align:center;">'.$unit.'</td>
+								<td>'.$this->erp->formatDecimal($row->quantity).'</td>
+								<td>$'.$qty.'</td>
+								<td style="font-weight:bold;">'.$discount.'</td>
+								<td>$'.$amount.'</td>
+								</tr>';
+							}else{
+								//$this->erp->print_arrays("ss");
+								$tablebody[$n_page].='<tr>
+								<td>'.$i.'</td>
+								<td style="text-align:left;font-size:13px;padding-left:5px;">'.$product_name.' ('. $row->product_noted. ')</td>
+								<td style="text-align:center;">'.$unit.'</td>
+								<td>'.$this->erp->formatDecimal($row->quantity).'</td>
+								<td>$'.$qty.'</td>
+								<td style="font-weight:bold;">'.$discount.'</td>
+								<td>$'.$amount.'</td>
+								</tr>';
+							}
+							
 							
 						}else{
 							
@@ -407,7 +448,7 @@ $tablebtmnone='	<tr>
 $tableend='</table></div>';
 
 $btm = '<div class="col-xs-12">
-			<div style="height:70px;border:1px solid black;">
+			<div style="height:60px;border:1px solid black;">
 				<div style ="padding-left:5px; padding-top:5px;font-size:14px;font-weight:bold;">Note:</div>
 				<div style ="padding-left:5px;" class = "note">'.$inv->note.'</div>
 			</div>
@@ -493,7 +534,7 @@ $btm = '<div class="col-xs-12">
 </div></div><div style="text-align:right;margin-right:20px;">'.'page '.$n_page. ' of '.$n_page.'</div>';
 
 $signature = '<div class="col-xs-12">
-			<div style="height:70px;border:1px solid black;">
+			<div style="height:60px;border:1px solid black;">
 				<div style ="padding-left:5px; padding-top:5px;font-size:14px;font-weight:bold;">Note:</div>
 				<div style ="padding-left:5px;" class = "note">'.$inv->note.'</div>
 			</div>
@@ -590,7 +631,8 @@ $signature = '<div class="col-xs-12">
 <script>
 	
 	$("document").ready(function(e){
-		//window.print();
+		
+		$('.box2').height($(".box1").height());
 		$( ".printing" ).click(function() {
 		  $(this).hide();
 		  window.print();
