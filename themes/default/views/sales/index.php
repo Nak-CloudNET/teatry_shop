@@ -67,7 +67,7 @@
 				var data = localStorage.getItem('DataTables_' + window.location.pathname);
 				return JSON.parse(data);
 			},
-            'sAjaxSource': '<?=site_url('sales/getSales' . ($warehouse_id ? '/' . $warehouse_id : '')).'/?v=1'.$v ?>',
+            'sAjaxSource'   : '<?=site_url('sales/getSales' . ($warehouse_id ? '/' . $warehouse_id : '')).'/?v=1'.$v ?>',
             'fnServerData': function (sSource, aoData, fnCallback) {
                 aoData.push({
                     "name": "<?=$this->security->get_csrf_token_name()?>",
