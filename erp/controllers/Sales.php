@@ -557,7 +557,6 @@ class Sales extends MY_Controller
         } else {
             $product_id          = NULL;
         }
-//        $this->erp->print_arrays($product_id);
         if ($this->input->get('biller')) {
             $biller             = $this->input->get('biller');
         } else {
@@ -656,7 +655,7 @@ class Sales extends MY_Controller
 							COALESCE((SELECT SUM(IF(erp_payments.paid_by = 'deposit', erp_payments.amount, 0)) FROM erp_payments WHERE erp_payments.sale_id = erp_sales.id ),0 ) as deposit,
 							SUM(COALESCE(erp_payments.discount,0)) as discount, 
 							(COALESCE(erp_sales.grand_total,0)-COALESCE((SELECT SUM(erp_return_sales.grand_total) FROM erp_return_sales WHERE erp_return_sales.sale_id = erp_sales.id), 0)-COALESCE( (SELECT SUM(IF((erp_payments.paid_by != 'deposit' AND ISNULL(erp_payments.return_id)), erp_payments.amount, IF(NOT ISNULL(erp_payments.return_id), ((-1)*erp_payments.amount), 0))) FROM erp_payments WHERE erp_payments.sale_id = erp_sales.id),0)- COALESCE((SELECT SUM(IF(erp_payments.paid_by = 'deposit', erp_payments.amount, 0)) FROM erp_payments WHERE erp_payments.sale_id = erp_sales.id  ),0)-SUM(COALESCE(erp_payments.discount,0)) ) as balance, 
-							sales.payment_status, sales.attachment, sales.join_lease_id,sales.frequency")
+							sales.payment_status")
                 ->from('sales')
                 ->join('companies', 'companies.id = sales.customer_id', 'left')
                 ->join('users', 'users.id = sales.saleman_by', 'left')
@@ -698,7 +697,7 @@ class Sales extends MY_Controller
 							(SELECT SUM(IF(erp_payments.paid_by = 'deposit', erp_payments.amount, 0)) FROM erp_payments WHERE erp_payments.sale_id = erp_sales.id  ) as deposit,
 							SUM(COALESCE(erp_payments.discount,0)) as discount, 
 							(COALESCE(erp_sales.grand_total,0)-COALESCE((SELECT SUM(erp_return_sales.paid) FROM erp_return_sales WHERE erp_return_sales.sale_id = erp_sales.id), 0)-COALESCE( (SELECT SUM(IF((erp_payments.paid_by != 'deposit' AND ISNULL(erp_payments.return_id)), erp_payments.amount, IF(NOT ISNULL(erp_payments.return_id), ((-1)*erp_payments.amount), 0))) FROM erp_payments WHERE erp_payments.sale_id = erp_sales.id),0)- COALESCE((SELECT SUM(IF(erp_payments.paid_by = 'deposit', erp_payments.amount, 0)) FROM erp_payments WHERE erp_payments.sale_id = erp_sales.id  ),0)-SUM(COALESCE(erp_payments.discount,0)) ) as balance, 
-							sales.payment_status, sales.attachment, sales.join_lease_id,sales.frequency")
+							sales.payment_status, sales.attachment")
                 ->from('sales')
                 ->join('users', 'users.id = sales.saleman_by', 'left')
                 ->join('sale_order', 'sale_order.id = sales.so_id', 'left')

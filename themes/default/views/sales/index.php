@@ -1,6 +1,6 @@
 <?php
 	$v = "";
-	
+
 	if ($this->input->post('reference_no')) {
 		$v .= "&reference_no=" . $this->input->post('reference_no');
 	}
@@ -44,7 +44,7 @@
 		$get_status = implode('_', $arr);
 		$v .= "&payment_status=" . $get_status;
 	}
-    
+
     if(isset($alert_id)){
 		$v .= "&a=" . $alert_id;
 	}
@@ -69,6 +69,8 @@
 			},
             'sAjaxSource'   : '<?=site_url('sales/getSales' . ($warehouse_id ? '/' . $warehouse_id : '')).'/?v=1'.$v ?>',
             'fnServerData': function (sSource, aoData, fnCallback) {
+                console.log(aoData);
+
                 aoData.push({
                     "name": "<?=$this->security->get_csrf_token_name()?>",
                     "value": "<?=$this->security->get_csrf_hash()?>"
@@ -77,39 +79,40 @@
             },
             'fnRowCallback': function (nRow, aData, iDisplayIndex) {
                 var oSettings = oTable.fnSettings();
+                console.log(aData);
 				nRow.id = aData[0];
 
                 var action = $('td:eq(18)', nRow);
-				
-				if (aData[17] != null) 
+
+				if (aData[17] != null)
 				{
-					action.find('.down_payment').remove(); 
+					action.find('.down_payment').remove();
 				}else{
-					action.find('.edit_down_payment').remove(); 	
+					action.find('.edit_down_payment').remove();
 				}
-				
+
 				if(aData[9] == 'returned') {
 					action.find('.edit').remove();
 				}
-				
+
 				nRow.className = "invoice_link";
-				
+
                 return nRow;
             },
             "aoColumns": [
-				{"bSortable": false, "mRender": checkbox}, 
+				{"bSortable": false, "mRender": checkbox},
 				{"mRender": fld},
-				null, null, null, null, null, null, null,
-				{"mRender": row_status}, 
-				{"mRender": currencyFormat}, 
-				{"mRender": currencyFormat}, 
-				{"mRender": currencyFormat}, 
-				{"mRender": currencyFormat}, 
-				{"mRender": currencyFormat}, 
-				{"mRender": currencyFormat}, 
-				{"mRender": row_status}, 
+				null, null, null, null, null, null,null,
+				{"mRender": row_status},
+				{"mRender": currencyFormat},
+				{"mRender": currencyFormat},
+				{"mRender": currencyFormat},
+				{"mRender": currencyFormat},
+				{"mRender": currencyFormat},
+				{"mRender": currencyFormat},
+				{"mRender": row_status},
 				{"sClass": "join_lease_id"},
-				{"bSortable": false}
+				{"bSortable": false},
 			],
             "aoColumnDefs": [
                 <?php if (!$GP['products-cost'] && !$GP['products-price']){ ?>
@@ -124,9 +127,9 @@
                 var gtotal = 0, tdeposit = 0, paid = 0, balance = 0, status = ' ',gpaid=0,dis = 0,return_s = 0;
                 for (var i = 0; i < aaData.length; i++) {
 					status = aaData[aiDisplay[i]][8];
-				gtotal += parseFloat(aaData[aiDisplay[i]][10]);
+				    gtotal += parseFloat(aaData[aiDisplay[i]][10]);
 					return_s += parseFloat(aaData[aiDisplay[i]][11]);
-					gpaid += parseFloat(aaData[aiDisplay[i]][12]);  
+					gpaid += parseFloat(aaData[aiDisplay[i]][12]);
 					tdeposit += parseFloat(aaData[aiDisplay[i]][13]);
 					dis += parseFloat(aaData[aiDisplay[i]][14]);
 					balance += parseFloat(aaData[aiDisplay[i]][15]);
@@ -151,7 +154,7 @@
             {column_number: 9, filter_default_label: "[<?=lang('sale_status');?>]", filter_type: "text", data: []},
             {column_number: 16, filter_default_label: "[<?=lang('payment_status');?>]", filter_type: "text", data: []},
         ], "footer");
-		
+
         if (localStorage.getItem('remove_slls')) {
             if (localStorage.getItem('slitems')) {
                 localStorage.removeItem('slitems');
@@ -369,7 +372,7 @@
                     items[i] = {'id': $(this).val()};
                     i++;
                 });
-                
+
                 $.ajax({
                     type: 'get',
                     url: site.base_url+'account/checkrefer',
@@ -414,7 +417,7 @@
 
 <div class="box">
     <div class="box-header">
-        
+
         <?php if ($warehouse_id) { ?>
             <h2 class="blue">
                 <i class="fa-fw fa fa-barcode"></i>
@@ -455,7 +458,7 @@
                 </li>
             </ul>
         </div>
-		
+
         <div class="box-icon">
             <ul class="btn-tasks">
             <?php if ($Owner || $Admin || $GP['sales-payments'] || $GP['sales-add'] || $GP['sales-export'] || $GP['sales-import'] || $GP['sales-combine_pdf']) { ?>
@@ -466,7 +469,7 @@
                     <ul class="dropdown-menu pull-right" class="tasks-menus" role="menu" aria-labelledby="dLabel">
 
 						<?php if ($Owner || $Admin || $GP['sales-payments']) { ?>
-                       
+
                         <?php } ?>
                         <?php if ($Owner || $Admin || $GP['sales-add']) { ?>
 							<li>
@@ -486,9 +489,9 @@
 									<i class="fa fa-file-pdf-o"></i> <?=lang('export_to_pdf')?>
 								</a>
 							</li>
-							
+
 						<?php } ?>
-						
+
 						<?php if($Owner || $Admin || $GP['sales-import']) { ?>
 							<li>
 								<a href="<?= site_url('sales/sale_by_csv'); ?>">
@@ -497,7 +500,7 @@
 								</a>
 							</li>
 						<?php }?>
-						
+
 						<?php if($Owner || $Admin || $GP['sales-payments']) { ?>
 							<li>
 								<a href="<?= site_url('sales/payment_by_csv'); ?>">
@@ -506,7 +509,7 @@
 								</a>
 							</li>
 						<?php }?>
-						
+
 						<?php if($Owner || $Admin || $GP['sales-combine_pdf']) { ?>
 							<li>
 								<a href="#" id="combine" data-action="combine">
@@ -514,7 +517,7 @@
 								</a>
 							</li>
 						<?php }?>
-						
+
                     </ul>
                 </li>
             <?php } ?>
@@ -536,7 +539,7 @@
                 ?>
             </ul>
         </div>
-    </div>	
+    </div>
     <div style="display: none;">
         <input type="hidden" name="form_action" value="" id="form_action"/>
         <?=form_submit('performAction', 'performAction', 'id="action-form-submit"')?>
@@ -563,27 +566,27 @@
                                 ?>
                             </div>
                         </div>
-						
+
 						<div class="col-sm-4">
                             <div class="form-group">
                                 <label class="control-label" for="customer"><?= lang("customer"); ?></label>
                                 <?php echo form_input('customer', (isset($_POST['customer']) ? $_POST['customer'] : ""), 'class="form-control" id="customer" data-placeholder="' . $this->lang->line("select") . " " . $this->lang->line("customer") . '"'); ?>
                             </div>
                         </div>
-						
+
 						<div class="col-md-4">
 							<div class="form-group">
 							<?= lang("saleman", "saleman"); ?>
-								<?php 
+								<?php
 									$salemans['0'] = lang("all");
 									foreach($agencies as $agency){
 										$salemans[$agency->id] = $agency->username;
 									}
 									echo form_dropdown('saleman', $salemans, (isset($_POST['saleman']) ? $_POST['saleman'] : ""), 'id="saleman" class="form-control saleman"');
-								?>							
+								?>
 							</div>
 						</div>
-						
+
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label class="control-label" for="reference_no"><?= lang("reference_no"); ?></label>
@@ -713,7 +716,7 @@
 							<th><?php echo $this->lang->line("return"); ?></th>
 							 <th><?php echo $this->lang->line("paid"); ?></th>
                             <th><?php echo $this->lang->line("deposit"); ?></th>
-							 <th><?php echo $this->lang->line("discount"); ?></th>  
+							 <th><?php echo $this->lang->line("discount"); ?></th>
                             <th><?php echo $this->lang->line("balance"); ?></th>
                             <th><?php echo $this->lang->line("payment_status"); ?></th>
 							<th></th>
@@ -757,3 +760,13 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+
+    $('body').on('click', '#assign_sale_man', function(e) {
+        e.preventDefault();
+
+        $('#form_action').val($('#assign_sale_man').attr('data-action'));
+        $('#action-form-submit').trigger('click');
+    });
+
+</script>
