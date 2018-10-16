@@ -412,19 +412,20 @@
                                 <span class="hidden-sm hidden-xs"><?= lang('sales_invoice') ?></span>
                             </a>
                         </div>
+                        <div class="btn-group">
+                            <a href="<?= site_url('sales/print_green/' . $inv->id) ?>" target="_blank" class="tip btn btn-primary" title="<?= lang('print') ?>">
+                                <i class="fa fa-print"></i>
+                                <span class="hidden-sm hidden-xs"><?= lang('print_invoice') ?></span>
+                            </a>
+                        </div>
 						<div class="btn-group">
                             <a href="<?= site_url('sales/view/' . $inv->id) ?>" class="tip btn btn-primary" title="<?= lang('view') ?>">
                                 <i class="fa fa-file-text-o"></i>
                                 <span class="hidden-sm hidden-xs"><?= lang('view') ?></span>
                             </a>
                         </div>
-                        <!--
-						<div class="btn-group">
-                            <a href="<?= site_url('sales/print_/' . $inv->id) ?>" target="_blank" class="tip btn btn-primary" title="<?= lang('print') ?>">
-                                <i class="fa fa-print"></i>
-                                <span class="hidden-sm hidden-xs"><?= lang('print') ?></span>
-                            </a>
-                        </div>
+
+						<!--
 						<div class="btn-group">
                             <a href="<?= site_url('sales/print_st_invoice/' . $inv->id) ?>" target="_blank" class="tip btn btn-primary" title="<?= lang('print') ?>">
                                 <i class="fa fa-print"></i>
