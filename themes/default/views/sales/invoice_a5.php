@@ -360,7 +360,7 @@
 </html>
 <script>
 	$("document").ready(function(e){
-		// window.print();
+		window.print();
 		var sum = 0;
 		var a=1;
 		$('#table-bordered tr.blank').each(function(i,el) {

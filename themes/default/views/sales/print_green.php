@@ -354,9 +354,13 @@ $table='<div class="col-xs-12"><table width="100%">
 								</tr>';
 							}else{
 								//$this->erp->print_arrays("ss");
+                                $pro_note='';
+                                if($row->product_noted!=''){
+                                    $pro_note='('.$row->product_noted.')';
+                                }
 								$tablebody[$n_page].='<tr>
 								<td>'.$i.'</td>
-								<td style="text-align:left;font-size:13px;padding-left:5px;">'.$product_name.' ('. $row->product_noted. ')</td>
+								<td style="text-align:left;font-size:13px;padding-left:5px;">'.$product_name.' '.$pro_note.'</td>
 								<td style="text-align:center;">'.$unit.'</td>
 								<td>'.$this->erp->formatDecimal($row->quantity).'</td>
 								<td>$'.$qty.'</td>
