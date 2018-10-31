@@ -5069,7 +5069,7 @@ class Sales extends MY_Controller
             $this->data['agencies'] 		= $this->site->getAllUsers();
             $this->data['customers'] 		= $this->site->getCustomers();
             $this->data['currency'] 		= $this->site->getCurrency();
-            $this->data['categories']       = $this->site->getCategory();
+            //$this->data['categories']       = $this->site->getCategory();
             $this->data['areas'] 			= $this->site->getArea();
             $this->data['payment_term'] 	= $this->site->getAllPaymentTerm();
             $this->data['bankAccounts'] 	=  $this->site->getAllBankAccounts();
