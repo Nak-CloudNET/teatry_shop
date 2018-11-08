@@ -3296,10 +3296,10 @@ class Sales_model extends CI_Model
 	
 	public function getPayments($fre)
     {
-        $this->db->select('*,sales.reference_no as reslae, CONCAT(erp_users.first_name," ",erp_users.last_name) AS name, payments.id AS payment_id')
+        $this->db->select('*,sales.reference_no as reslae,purchases.reference_no AS purchase_re, payments.date AS dates, CONCAT(erp_users.first_name," ",erp_users.last_name) AS name, payments.id AS payment_id')
         ->join('sales','sales.id=payments.sale_id','left')
-        ->join('users','sales.saleman_by = users.id','left');
-
+        ->join('users','sales.saleman_by = users.id','left')
+        ->join('purchases','erp_payments.purchase_id = erp_purchases.id','left');
 		$this->db->where(array('payments.reference_no' => $fre));
         $q = $this->db->get('payments');
         if ($q->num_rows() > 0) {

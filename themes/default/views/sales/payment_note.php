@@ -110,8 +110,14 @@
 						$payments = 0;
 						foreach($rowpay as $row){
 							echo '<tr class="item"><td class="text-center">#' . $no . "</td>";
-							echo '<td class="text-center">' . $row->date. '</td>';
-							echo '<td class="text-center">' . $row->reslae. '</td>';						
+							echo '<td class="text-center">' . $row->dates. '</td>';
+							if($row->reslae) {
+                                echo '<td class="text-center">' . $row->reslae . '</td>';
+                            }elseif ($row->purchase_re){
+                                echo '<td class="text-center">' . $row->purchase_re . '</td>';
+                            }else{
+							    echo '<td></td>';
+                            }
 							echo '<td class="text-center">' . ($this->erp->formatMoney($row->amount)) . '</td>';
 							$no++;
 							$payments += $row->amount;
