@@ -2126,12 +2126,12 @@ class Products extends MY_Controller
         if ($this->input->get('start_date')) {
             $start_date = $this->input->get('start_date');
         } else {
-            $start_date = NULL;
+            $start_date = date('d/m/Y');
         }
         if ($this->input->get('end_date')) {
             $end_date = $this->input->get('end_date');
         } else {
-            $end_date = NULL;
+            $end_date = date('d/m/Y');
         }
         if ($start_date) {
             $start_date = $this->erp->fld($start_date);
@@ -2189,7 +2189,7 @@ class Products extends MY_Controller
 			$this->datatables->where('adjustments.reference_no', $reference_no);
 		}
 		if ($start_date) {
-			$this->datatables->where($this->db->dbprefix('adjustments').'.date BETWEEN "' . $start_date . ' 00:00:00" and "' . $end_date . '23:59:00"');
+			$this->datatables->where($this->db->dbprefix('adjustments').'.date BETWEEN "' . $start_date.'00:00:00' . '" and "' . $end_date.'23:59:59' . '"');
 		}
 
         $this->datatables->add_column("Actions", "<div class='text-center'><a href='" . site_url('products/edit_multi_adjustment/$1') . "' class='tip' title='" . lang("edit_adjustment") . "'><i class='fa fa-edit'></i></a></div>", "id");
