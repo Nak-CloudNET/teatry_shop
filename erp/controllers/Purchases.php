@@ -7012,12 +7012,12 @@ class Purchases extends MY_Controller
         if ($this->input->get('start_date')) {
             $start_date = $this->input->get('start_date');
         } else {
-            $start_date = NULL;
+            $start_date = date('d/m/Y');
         }
         if ($this->input->get('end_date')) {
             $end_date = $this->input->get('end_date');
         } else {
-            $end_date = NULL;
+            $end_date = date('d/m/Y');
         }
         if ($start_date) {
             $start_date = $this->erp->fld($start_date);
@@ -7066,7 +7066,7 @@ class Purchases extends MY_Controller
 			$this->datatables->where("expenses.note LIKE '%" . $note . "%'");
 		}
 		if ($start_date) {
-			$this->datatables->where($this->db->dbprefix('expenses').'.date BETWEEN "' . $start_date . '" and "' . $end_date . '"');
+			$this->datatables->where($this->db->dbprefix('expenses').'.date BETWEEN "' . $start_date.'00:00:00' . '" and "' . $end_date.'23:59:59' . '"');
 		}
         $this->datatables->add_column("Actions", $action, "id");
         echo $this->datatables->generate();
